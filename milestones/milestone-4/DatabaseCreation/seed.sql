@@ -1,0 +1,13 @@
+--Seed Script
+
+--Inserting Sample Data for Person
+
+INSERT INTO [Person] ([FirstName],[LastName],[Username],[UserPassword],[Email], [ProfilePicture],[ProfileBio]) VALUES ('John','Doe','TheOGJonDoe','123456789','JohnDoe@)gmail.com','https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/John_Doe%2C_born_John_Nommensen_Duchac.jpg/1200px-John_Doe%2C_born_John_Nommensen_Duchac.jpg','Hey I am The Original Jon Doe');
+INSERT INTO [Person] ([FirstName],[LastName],[Username],[UserPassword],[Email], [ProfilePicture],[ProfileBio]) VALUES ('Sandra','Hart','HW6FlashBack','SandraIsTheBest1','SandraHart@)gmail.com','https://www.federalwaymirror.com/wp-content/uploads/2018/06/12223294_web1_sandy-hartT.jpg','Hey Remember Me?');
+INSERT INTO [Person] ([FirstName],[LastName],[Username],[UserPassword],[Email], [ProfilePicture],[ProfileBio]) VALUES ('Joeseph','Parentalfigure','IfYouKnowYouKnow','JoeTheGreatest','JospephP@)gmail.com','https://i0.wp.com/www.bridgedetroit.com/wp-content/uploads/2023/01/Barrett-Strong.jpeg?fit=540%2C540&ssl=1','Careful What you say.');
+
+--Inserting Sample Data for Game
+
+INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture]) VALUES ('Gears Of War','The planet lies in ruin – cities crumbling, Man’s greatest works fallen. The Locust Horde has risen, and they won’t stop coming. They won’t stop killing. An inmate named Marcus Fenix, once left to die, is now charged with keeping humanity alive. He can take comfort in but one fact: The human race isn’t extinct. Yet.', 2006, 9.7, 'https://upload.wikimedia.org/wikipedia/en/thumb/8/82/Gears_of_war_cover_art.jpg/220px-Gears_of_war_cover_art.jpg');
+INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture]) VALUES ('Deep Rock Galatic','Deep Rock Galactic is a cooperative first-person shooter video game developed by Danish studio Ghost Ship Games and published by Coffee Stain Publishing. ', 2018, 9.6, 'https://cf.geekdo-images.com/LlbizD6pMEMBm2pzYg8QVA__opengraph/img/GfwPOlMVJzcDDzzRtmaL0EVMB2Q=/fit-in/1200x630/filters:strip_icc()/pic6653293.jpg');
+INSERT INTO [Game] ([Title],[Description],[YearPublished],[AverageRating],[CoverPicture]) VALUES ('Minecraft','If you can dream it, you can build it. Put your imagination and limitless resources to work with Creative Mode.', 2011, 9.5, 'https://image.api.playstation.com/vulcan/img/cfn/11307uYG0CXzRuA9aryByTHYrQLFz-HVQ3VVl7aAysxK15HMpqjkAIcC_R5vdfZt52hAXQNHoYhSuoSq_46_MT_tDBcLu49I.png');
