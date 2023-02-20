@@ -3,49 +3,39 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-
 <ul class="navbar-nav .d-flex .flex-row">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
         </li>
-        <li class="nav-item">
-            <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
-        <!-- Icon dropdown -->
-@*        <li class="nav-item dropdown">
+
+        <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Picture
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li>
-                    <a class="dropdown-item" href="#">Action</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#">Another action</a>
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                    <a class="dropdown-item" href="#">Logout</a>
-                </li>
-            </ul>
-        </li>*@
+               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             @if (UserManager.GetUserAsync(User).Result?.ProfilePicture is null)
             {
-             <Li>
-                <img src="https://img.icons8.com/ios/256/test-account.png" style="width:40px;height:40px; object-fit:cover; border-radius:30px"/>
-            </Li>
+                <img src="https://img.icons8.com/ios-glyphs/256/user.png" width="20" height="20" class="rounded-circle">
             }
             else
             {
-             <li>
-                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
-            </Li>
+                <img src="data:image/*;base64,@(Convert.ToBase64String(Model.Input.ProfilePicture))" width="20" height="20" class="rounded-circle">
             }
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li>
+                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account Preferences</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <form accesskeyclass="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button  type="submit" class="dropdown-item">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </li>
+
+
     }
     else
     {

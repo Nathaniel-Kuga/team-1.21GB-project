@@ -1,4 +1,9 @@
-﻿@model Team121GBCapstoneProject.Models.GameInfo;
+﻿@using Microsoft.AspNetCore.Identity
+@using Team121GBCapstoneProject.Areas.Identity.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model Team121GBCapstoneProject.Models.GameInfo;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,30 +18,54 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <input type="button" 
-                    value="Log in" 
-                    style="height:50px; 
-                           width:200px; 
-                           background-color: grey; 
-                           color: white; 
-                           font-weight: bolder; 
-                           border-color: black; 
-                           border-width: 2px; 
-                           border-radius: 10px;
-                           font-size: larger;"/>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <input type="button" 
+                               value="Log Out" 
+                               style="height:50px; 
+                                      width:200px; 
+                                      background-color: grey; 
+                                      color: white; 
+                                      font-weight: bolder; 
+                                      border-color: black; 
+                                      border-width: 2px; 
+                                      border-radius: 10px;
+                                      font-size: larger;"/>
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                        <input type="button" 
+                               value="Log In" 
+                               style="height:50px; 
+                                      width:200px; 
+                                      background-color: grey; 
+                                      color: white; 
+                                      font-weight: bolder; 
+                                      border-color: black; 
+                                      border-width: 2px; 
+                                      border-radius: 10px;
+                                      font-size: larger;"/>
+                    </a>
+                }
+
             </div>
             <div class="col-sm">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">
                 <input type="button"
                        value="Create Account"
                        style="height:50px;
-                           width:200px;
-                           background-color: dodgerblue;
-                           color: white;
-                           font-weight: bolder;
-                           border-color: black;
-                           border-width: 2px;
-                           border-radius: 10px;
-                           font-size: larger;" />
+                              width:200px;
+                              background-color: dodgerblue;
+                              color: white;
+                              font-weight: bolder;
+                              border-color: black;
+                              border-width: 2px;
+                              border-radius: 10px;
+                              font-size: larger;" />
+                </a>
             </div>
         </div>
     </div>
