@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Team121GBCapstoneProject.Areas.Identity.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav .d-flex .flex-row">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @if (UserManager.GetUserAsync(User).Result?.ProfilePicture is null)
+            {
+                <img src="https://img.icons8.com/ios-glyphs/256/user.png" width="20" height="20" class="rounded-circle">
+            }
+            else
+            {
+                <img src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" width="20" height="20" class="rounded-circle">
+            }
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                <li>
+                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account Preferences</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <form accesskeyclass="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button  type="submit" class="dropdown-item">Log Out</button>
+                    </form>
+                </li>
+            </ul>
+        </li>
+
+
+    }
+    else
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button"
+               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="https://img.icons8.com/ios-glyphs/256/user.png" width="20" height="20" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink2">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Log In</a>
+                </li>
+
+            </ul>
+        </li>
+    }
+</ul>
