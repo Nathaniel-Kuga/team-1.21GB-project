@@ -1,4 +1,4 @@
-﻿namespace Team121GBCapstoneProject.Services;
+﻿namespace Team121GBCapstoneProject.Services.Abstract;
 
 public interface IReCaptchaService
 {
