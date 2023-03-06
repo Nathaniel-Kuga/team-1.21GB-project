@@ -84,7 +84,8 @@ namespace Team121GBCapstoneProject.Controllers
         [HttpPost("addGame")]
         //public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("Title")] Game game, string listName)
         //public async Task<ActionResult<IgdbGame>> AddGameToList(string listName)
-        public async Task<ActionResult<IgdbGame>> AddGameToList([FromBody] GameAndListDTO gameAndListDto)
+        //public async Task<ActionResult<IgdbGame>> AddGameToList([FromBody] GameAndListDTO gameAndListDto)
+        public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("ListName, GameTitle")] GameAndListDTO gameAndListDto)
         {   //need to set it up so we have a user a that is logged in.
             var loggedInUser = _personRepository.GetAll()
                                                .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
