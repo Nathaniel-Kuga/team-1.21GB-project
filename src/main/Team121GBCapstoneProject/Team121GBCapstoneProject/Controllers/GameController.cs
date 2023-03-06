@@ -54,7 +54,7 @@ namespace Team121GBCapstoneProject.Controllers
             return Ok(searchResult);
         }
         [HttpPost("addGame")]
-        public async Task<ActionResult<IgdbGame>> AddGameToList(Game game, string listName)
+        public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("Title")] Game game, string listName)
         //public async Task<ActionResult<IgdbGame>> AddGameToList(string listName)
         {   //need to set it up so we have a user a that is logged in.
             var loggedInUser = _personRepository.GetAll()

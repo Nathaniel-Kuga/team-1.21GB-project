@@ -21,13 +21,45 @@ $(document).ready(function () {
 
                     var row = `<tr>
                                     <td><img src="${resizedCoverArt}"></td>
-                                    <td>${game.gameTitle}</td>
+                                    <td id="td${i}">${game.gameTitle}</td>
                                     <td><a href="${game.gameWebsite}">${game.gameWebsite}"</a></td>
-                                    <td><button class="btn btn-primary">Add Game</button></td>
+                                    <td><button id="${i}" class="btn btn-primary">Add Game</button></td>
                                </tr>`;
                     $("#gameTableBody").append(row);
                 });
             }
         });
     });
+    //put the get the lists method
+    $("table").on("click", "button", function () {
+        let id = $(this).attr("id");
+        alert(id);
+        let tableDataId = $(`#td${id}`).attr("id");
+        alert(tableDataId)
+        //const title = document.getElementById("tableDataId");
+        //console.log(id);
+        //console.log(tableDataId);
+        //console.log(title);
+        //$.ajax({
+        //    type: "POST",
+        //    dataType: "json",
+        //    url: `api/Game/addGame`,
+        //    contentType: "application/json; charset=UTF-8",
+        //    data: JSON.stringify(),
+        //    success: afterAddGame,
+        //    error: errorAlert
+        //});
+    });
 });
+
+function afterAddGame() {
+    $("#confirmation").empty();
+    let confirmation = `<h1 class="text-success">
+                            Success!
+                        </h1>`
+}
+
+    function errorAlert() {
+        alert("Something went wrong, please try again.")
+    }
+
