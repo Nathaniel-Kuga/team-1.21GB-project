@@ -1,4 +1,4 @@
-﻿@page "account%preferences"
+﻿@page "account preferences"
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
@@ -34,12 +34,25 @@
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="card">
+                <div class="card-title">
+                    <div class="card-header">
+                        <h3>Profile Bio</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <input asp-for="Input.ProfileBio" class="form-control"
+                           placeholder="@Model.Input.ProfileBio" maxlength="501" />
+                    <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
+                </div>
+            </div>
+            <button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
             @*<div class="form-floating mb-3">*@
             @*                <input asp-for="Input.ProfileUsername" class="form-control" placeholder="@Model.Input.ProfileUsername" />
             <label asp-for="Input.ProfileUsername" class="form-label"></label>
             <span asp-validation-for="Input.ProfileUsername" class="text-danger"></span>
             </div>*@
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+            @*<button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>*@
         </div>
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -60,26 +73,34 @@
                        style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
                        onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
                 <span asp-validation-for="Input.ProfilePicture" class="text-danger"></span>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <form id="profile-bio-form" method="post">
-                <div class="card">
-                    <div class="card-title">
-                        <div class="card-header">
-                            <h3>Profile Bio</h3>
+
+                <button type="button" class="btn btn-primary" onclick="dalleModalOpen()">
+                    Generate Profile Picture with DALL-E
+                </button>
+
+                <div class="modal fade" id="DalleModal" tabindex="-1" role="dialog" aria-labelledby="DalleModalTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Dalle Image Generator</h5>
+                                <button type="button" class="close" onclick="dalleModalClose()" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Using this button will have you continue on to a new page where you can input a prompt and then have Dall-e generate an image based on your prompt.</p>
+                                <p>To do so just type in your prompt into the box that says <b>Prompt</b> and then hit the <b>Generate Image</b> button once.</p>
+                                <p>After a few seconds your image will appear.</p>
+                                <br/>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="GenerateImage">Create Image</a>
+                                <button type="button" class="btn btn-secondary" onclick="dalleModalClose()">Close</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <input asp-for="Input.ProfileBio" class="form-control"
-                               placeholder="@Model.Input.ProfileBio" maxlength="501" />
-                        <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
-                    </div>
                 </div>
-                <button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-            </form>
+            </div>
         </div>
     </div>
 </form>
@@ -87,4 +108,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript" src="~/js/site.js"></script>
 }

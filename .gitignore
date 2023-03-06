@@ -351,3 +351,4 @@ MigrationBackup/
 
 #.vscode generated files
 .vscode/
+/src/main/Team121GBCapstoneProject/Team121GBCapstoneProject/Views/Shared/_LoginPartial.cshtml

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAI.GPT3.Extensions;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Data;
 using Team121GBCapstoneProject.Services.Abstract;
@@ -8,6 +9,12 @@ using Team121GBCapstoneProject.Services.Concrete;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
+using Team121GBCapstoneProject.Areas.Identity.Data;
+using OpenAI.GPT3.Interfaces;
+using System;
+using OpenAI.GPT3.Managers;
+using OpenAI.GPT3.ObjectModels;
+using OpenAI.GPT3;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Http;
 using Team121GBCapstoneProject.Services;
@@ -16,6 +23,7 @@ using Team121GBCapstoneProject.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
+var DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
 var SendGridKey = builder.Configuration["SendGridKey"];
 var igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
 var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
@@ -60,6 +68,17 @@ builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IPersonGameListRepository, PersonGameListRepository>();
 
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddOpenAIService(settings =>
+{
+    settings.ApiKey = DalleSecretKey;
+});
+builder.Services.AddScoped<IOpenAIService, OpenAIService>();
+builder.Services.AddScoped<IDalleService, DalleService>();
+
+//var openAiService = builder.Services.BuildServiceProvider().GetRequiredService<IOpenAIService>();
+//openAiService.SetDefaultModelId(Models.Davinci);
+
 
 var app = builder.Build();
 

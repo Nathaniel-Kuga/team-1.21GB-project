@@ -33,6 +33,14 @@ $(document).ready(function () {
             }
         });
     });
+});
+
+function dalleModalOpen() {
+    $('#DalleModal').modal('show');
+}
+function dalleModalClose() {
+    $('#DalleModal').modal('hide');
+}
     //put the get the lists method
     $("table").on("click", "button", function () {
         let id = $(this).attr("id");
