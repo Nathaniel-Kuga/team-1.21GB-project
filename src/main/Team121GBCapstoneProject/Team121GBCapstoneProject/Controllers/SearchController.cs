@@ -17,10 +17,16 @@ public class SearchController : Controller
         //_gameRepository = gameRepo;
     }
 
-    public IActionResult Results(IEnumerable<IgdbGame> gameSearchResults)
-    {
+    // This method is not used in the current implementation of the search feature
+    //public IActionResult Results(IEnumerable<IgdbGame> gameSearchResults)
+    //{
 
-        return View("SearchResults", gameSearchResults);
+    //    return View("SearchResults", gameSearchResults);
+    //}
+
+    public IActionResult Results()
+    {
+        return View("SearchResults");
     }
 
 }

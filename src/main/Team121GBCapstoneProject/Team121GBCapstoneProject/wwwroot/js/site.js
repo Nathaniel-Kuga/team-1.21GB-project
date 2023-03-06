@@ -8,6 +8,7 @@ $(document).ready(function () {
     $("#searchButton").click(function (event) {
         event.preventDefault(); // prevent the default form submission behavior
         var query = $("#searchInput").val(); // get the value from the search input field
+
         $.ajax({
             type: "GET",
             url: "/api/Game",
@@ -27,6 +28,9 @@ $(document).ready(function () {
                                </tr>`;
                     $("#gameTableBody").append(row);
                 });
+
+                // redirect to the search results page after the ajax call is successful
+                //window.location.href = "/Search/Results";
             }
         });
     });

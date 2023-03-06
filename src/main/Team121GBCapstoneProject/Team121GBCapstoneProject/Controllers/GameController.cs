@@ -22,24 +22,29 @@ namespace Team121GBCapstoneProject.Controllers
         private readonly IRepository<Game> _gameRepository;
         private string _clientId;
         private string _bearerToken;
+        private readonly IConfiguration _config;
 
         public GameController(UserManager<ApplicationUser> userManager,
                                 IIgdbService igdbService, 
                                 IRepository<Person> personRepository, 
-                                IRepository<Game> gameRepository)
+                                IRepository<Game> gameRepository, 
+                                IConfiguration configuration)
         {
             _userManager = userManager;
             _igdbService = igdbService;
             _personRepository = personRepository;
             _gameRepository = gameRepository;
+            _config = configuration;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query)
         {
             // TODO: Move these to UserSecrets before deployment
-            _bearerToken = "llrnvo5vfowcyr0ggecl445q5dunyl";
-            _clientId = "8ah5b0s8sx19uadsx3b5m4bfekrgla";
+            //_bearerToken = "llrnvo5vfowcyr0ggecl445q5dunyl";
+            //_clientId = "8ah5b0s8sx19uadsx3b5m4bfekrgla";
+            _bearerToken = _config["GamingPlatform:igdbBearerToken"];
+            _clientId = _config["GamingPlatform:igdbClientId"];
             
             // Set Credentials
             _igdbService.SetCredentials(_clientId, _bearerToken);
@@ -53,6 +58,7 @@ namespace Team121GBCapstoneProject.Controllers
 
             return Ok(searchResult);
         }
+
         [HttpPost("addGame")]
         public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("Title")] Game game, string listName)
         //public async Task<ActionResult<IgdbGame>> AddGameToList(string listName)

@@ -17,6 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
 var SendGridKey = builder.Configuration["SendGridKey"];
+var igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
+var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
 
 builder.Services.AddHttpClient();
 // Add services to the container.
