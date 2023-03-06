@@ -82,8 +82,9 @@ namespace Team121GBCapstoneProject.Controllers
             return Ok(userListDTO);
         }
         [HttpPost("addGame")]
-        public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("Title")] Game game, string listName)
+        //public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("Title")] Game game, string listName)
         //public async Task<ActionResult<IgdbGame>> AddGameToList(string listName)
+        public async Task<ActionResult<IgdbGame>> AddGameToList([FromBody] GameAndListDTO gameAndListDto)
         {   //need to set it up so we have a user a that is logged in.
             var loggedInUser = _personRepository.GetAll()
                                                .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
@@ -102,12 +103,12 @@ namespace Team121GBCapstoneProject.Controllers
                 }
                 // * check if this game already exists in the database
                 bool check = _gameRepository.GetAll()
-                                            .Any(g => g.Title == game.Title);
+                                            .Any(g => g.Title == gameAndListDto.GameTitle);
                 if (check) //add game to a users list 
                 {
                     check = loggedInUser.PersonGameLists
                                         .Where(g => g.Game != null)
-                                        .Any(g => g.Game.Title == game.Title);
+                                        .Any(g => g.Game.Title == gameAndListDto.GameTitle);
                     //check if user's list already contains this game.
                     if (check)
                     {
@@ -115,13 +116,13 @@ namespace Team121GBCapstoneProject.Controllers
                         return Content("This game is already in your list.");
                     }
                     //grab game from db and add it your specified list
-                    string gameTitle = game.Title;
-                    game = _gameRepository.GetAll()
-                                          .Where(g => g.Title == gameTitle)
-                                          .First();
+                    string gameTitle = gameAndListDto.GameTitle;
+                    var game = _gameRepository.GetAll()
+                                              .Where(g => g.Title == gameTitle)
+                                              .First();
                     //string listName = "Currently Playing";
                     PersonGameList list = loggedInUser.PersonGameLists
-                                                      .Where(l => l.ListName.NameOfList == listName)
+                                                      .Where(l => l.ListName.NameOfList == gameAndListDto.ListName)
                                                       .First();
 
                     PersonGameList gameList = new PersonGameList();
@@ -140,23 +141,25 @@ namespace Team121GBCapstoneProject.Controllers
                 }
                 else // add game to db first.
                 {
-                    await AddGameToDb(game);
+                    var tempGame = new Game();
+                    tempGame.Title = gameAndListDto.GameTitle;
+                    await AddGameToDb(tempGame);
                     //now add to users list
                     //grab game from db and add it your specified list
-                    string gameTitle = game.Title;
-                    game = _gameRepository.GetAll()
+                    string gameTitle = gameAndListDto.GameTitle;
+                    tempGame = _gameRepository.GetAll()
                                           .Where(g => g.Title == gameTitle)
                                           .First();
                     //string listName = "Currently Playing";
                     PersonGameList list = loggedInUser.PersonGameLists
-                                                      .Where(l => l.ListName.NameOfList == listName)
+                                                      .Where(l => l.ListName.NameOfList == gameAndListDto.ListName)
                                                       .First();
 
                     PersonGameList gameList = new PersonGameList();
                     gameList.ListName = list.ListName;
                     gameList.ListNameId = list.ListNameId;
-                    gameList.Game = game;
-                    gameList.GameId = game.Id;
+                    gameList.Game = tempGame;
+                    gameList.GameId = tempGame.Id;
                     gameList.Person = loggedInUser;
                     gameList.PersonId = loggedInUser.Id;
                     gameList.ListKind = list.ListKind;

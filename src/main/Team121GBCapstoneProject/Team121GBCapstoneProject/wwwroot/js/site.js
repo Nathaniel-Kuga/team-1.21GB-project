@@ -49,24 +49,35 @@ $(document).ready(function () {
                 //$.each(data, function (index, value) {
                 //    console.log(index + ": " + value.val());
                 //});
+                let listNameFormId = $("#listName").attr("id");
+                $("#listName").empty();
                 for (let i = 0; i < data.length; ++i) {
                     console.log(data[i]);
+                    let selectOption = `<option value="${data[i].listName}">${data[i].listName}</option>`;
+                    $("#listName").append(selectOption);
                 }
 
+                $("select").on("click", "option", function () {
+                    const listName = $(this).text();
+                    console.log("listName = " + listName);
+                    const dataToSend = { title: title, listName: listName };
+                    console.log(dataToSend);
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: `api/Game/addGame`,
+                        contentType: "application/json; charset=UTF-8",
+                        data: JSON.stringify(dataToSend),
+                        success: afterAddGame,
+                        error: errorAlert
+                    });
+                });
             },
             error: console.log("You don't have any lists to add a game to!")
         });
 
 
-        //$.ajax({
-        //    type: "POST",
-        //    dataType: "json",
-        //    url: `api/Game/addGame`,
-        //    contentType: "application/json; charset=UTF-8",
-        //    data: JSON.stringify(title),
-        //    success: afterAddGame,
-        //    error: errorAlert
-        //});
+
     });
 });
 
