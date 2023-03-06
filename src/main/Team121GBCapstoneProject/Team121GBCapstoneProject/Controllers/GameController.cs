@@ -9,6 +9,7 @@ using Team121GBCapstoneProject.DAL.Abstract;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Team121GBCapstoneProject.DAL.Concrete;
+using Team121GBCapstoneProject.Models.DTO;
 
 namespace Team121GBCapstoneProject.Controllers
 {
@@ -25,9 +26,9 @@ namespace Team121GBCapstoneProject.Controllers
         private readonly IConfiguration _config;
 
         public GameController(UserManager<ApplicationUser> userManager,
-                                IIgdbService igdbService, 
-                                IRepository<Person> personRepository, 
-                                IRepository<Game> gameRepository, 
+                                IIgdbService igdbService,
+                                IRepository<Person> personRepository,
+                                IRepository<Game> gameRepository,
                                 IConfiguration configuration)
         {
             _userManager = userManager;
@@ -45,7 +46,7 @@ namespace Team121GBCapstoneProject.Controllers
             //_clientId = "8ah5b0s8sx19uadsx3b5m4bfekrgla";
             _bearerToken = _config["GamingPlatform:igdbBearerToken"];
             _clientId = _config["GamingPlatform:igdbClientId"];
-            
+
             // Set Credentials
             _igdbService.SetCredentials(_clientId, _bearerToken);
 
@@ -59,6 +60,27 @@ namespace Team121GBCapstoneProject.Controllers
             return Ok(searchResult);
         }
 
+        [HttpGet("getUserLists")]
+        public async Task<ActionResult<List<PersonGameList>>> GetUserLists()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            List<PersonGameList> userLists = _personRepository.GetAll()
+                                                         .Where(user => user.AuthorizationId == currentUser.Id)
+                                                         .First()
+                                                         .PersonGameLists
+                                                         .ToList();
+            List<PersonGameListDTO> userListDTO = new List<PersonGameListDTO>();
+            foreach (var list in userLists)
+            {
+                PersonGameListDTO listDTO = new PersonGameListDTO(list.ListName.NameOfList);
+                userListDTO.Add(listDTO);  
+            }
+            if(userLists.Count == 0)
+            {
+                return BadRequest("You don't have any lists!");
+            }
+            return Ok(userListDTO);
+        }
         [HttpPost("addGame")]
         public async Task<ActionResult<IgdbGame>> AddGameToList([Bind("Title")] Game game, string listName)
         //public async Task<ActionResult<IgdbGame>> AddGameToList(string listName)
@@ -68,10 +90,20 @@ namespace Team121GBCapstoneProject.Controllers
                                                .First();
             try
             {
+                // * check a user has any lists
+                List<PersonGameList> userListCheck = _personRepository.GetAll()
+                                                                      .Where(user => user.AuthorizationId == _userManager.GetUserId(User))
+                                                                      .First()
+                                                                      .PersonGameLists
+                                                                      .ToList();
+                if (userListCheck.Count == 0)
+                {
+                    return NotFound(); 
+                }
                 // * check if this game already exists in the database
                 bool check = _gameRepository.GetAll()
                                             .Any(g => g.Title == game.Title);
-                if(check) //add game to a users list 
+                if (check) //add game to a users list 
                 {
                     check = loggedInUser.PersonGameLists
                                         .Where(g => g.Game != null)
@@ -143,7 +175,7 @@ namespace Team121GBCapstoneProject.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<IgdbGame>>  AddGameToDb(Game game)
+        public async Task<ActionResult<IgdbGame>> AddGameToDb(Game game)
         {
             try
             {
