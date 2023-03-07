@@ -41,40 +41,89 @@ function dalleModalOpen() {
 function dalleModalClose() {
     $('#DalleModal').modal('hide');
 }
-    //put the get the lists method
-    $("table").on("click", "button", function () {
-        let id = $(this).attr("id");
-        let tableDataId = $(`#td${id}`).attr("id");
-        const title = $(`#${tableDataId}`).text();
-        console.log(id);
-        console.log(tableDataId);
-        console.log(title);
-        $.ajax({
-            type: "GET",
-            url: "/api/Game/getUserLists",
-            dataType: "json",
-            success: getUserListsSuccess,
-            error: getUserListsFailure
-        });
+//$("table").on("click", "button", function () {
+//    // Get the title from the data attribute of the parent cell
+//    let title = $(this).parent().data("title");
 
+//    // Log some information for debugging
+//    console.log(this.id);
+//    console.log($(this).parent().attr("id"));
+//    console.log(title);
 
+//    // Make an AJAX request using jQuery
+//    $.ajax({
+//        type: "GET",
+//        url: "/api/Game/getUserLists",
+//        dataType: "json",
+//        context: { title }, // Use shorthand property for context object
+//        success: getUserListsSuccess,
+//        error: getUserListsFailure
+//    });
+//});
+//put the get the lists method
+$("table").on("click", "button", function () {
+    let id = $(this).attr("id");
+    let tableDataId = $(`#td${id}`).attr("id");
+    const title = $(`#${tableDataId}`).text();
 
+    console.log(id);
+    console.log(tableDataId);
+    console.log(title);
+    //
+    $.ajax({
+        type: "GET",
+        url: "/api/Game/getUserLists",
+        dataType: "json",
+        success: function (data) {
+            console.log("Getting user lists succeeded");
+            let listNameFormId = $("#listName").attr("id");
+            $("#listName").empty();
+            for (let i = 0; i < data.length; ++i) {
+                console.log(data[i]);
+                let selectOption = `<option value="${data[i].listName}">${data[i].listName}</option>`;
+                $("#listName").append(selectOption);
+            }
+
+            $("#formSubmit").on("click", function () {
+                const list = $("#listName").text();
+                console.log("listName = " + list);
+                let origin = $(location).attr("origin");
+                console.log(title);
+                const dataToSend = { listName: list, gameTitle: title };
+                console.log(dataToSend);
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: `${origin}/api/Game/addGame`,
+                    contentType: "application/json; charset=UTF-8",
+                    data: JSON.stringify(dataToSend),
+                    success: afterAddGame,
+                    error: errorAlert
+                });
+            });
+        },
+        error: getUserListsFailure
     });
+
 });
 
+
 function afterAddGame() {
-    $("#confirmation").empty();
-    let confirmation = `<h1 class="text-success">
-                            Success!
-                        </h1>`;
-    $("#confirmation").append(confirmation);
+    alert("Success!");
+    //$("#confirmation").empty();
+    //let confirmation = `<h1 class="text-success">
+    //                        Success!
+    //                    </h1>`;
+    //$("#confirmation").append(confirmation);
 }
 
 function errorAlert() {
     alert("Something went wrong, please try again.")
 }
 
+//function getUserListsSuccess(data, title) {
 function getUserListsSuccess(data) {
+
     console.log("Getting user lists succeeded");
     let listNameFormId = $("#listName").attr("id");
     $("#listName").empty();
@@ -84,10 +133,16 @@ function getUserListsSuccess(data) {
         $("#listName").append(selectOption);
     }
 
-    $("select").on("click", "option", function () {
-        const listName = $(this).text();
-        console.log("listName = " + listName);
-        const dataToSend = { title: title, listName: listName };
+    $("#formSubmit").on("click", function () {
+        const list = $("#listName").text();
+        console.log("listName = " + list);
+        //let id = $(this).attr("id");
+        //let tableDataId = $(`#td${id}`).attr("id");
+        //const title = $(`#${tableDataId}`).text();
+        ////const title = $("#").text();
+
+        console.log(this.title);
+        const dataToSend = { listName: list, gameTitle: this.title };
         console.log(dataToSend);
         $.ajax({
             type: "POST",
