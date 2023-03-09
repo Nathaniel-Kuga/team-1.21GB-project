@@ -27,7 +27,7 @@ public class IgdbAPIServiceTests
                .ReturnsResponse(HttpStatusCode.OK);
         
         //New up the service class
-        var igdbService = new IgdbService(handler.CreateClientFactory());
+        //var igdbService = new IgdbService(handler.CreateClientFactory());
         //Act
         
 
