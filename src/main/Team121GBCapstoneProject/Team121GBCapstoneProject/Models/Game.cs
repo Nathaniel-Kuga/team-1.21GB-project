@@ -14,10 +14,10 @@ public partial class Game
     public int Id { get; set; }
 
     [StringLength(64)]
-    public string? Title { get; set; }
+    public string Title { get; set; }
 
     [StringLength(526)]
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     public int? YearPublished { get; set; }
 
@@ -27,5 +27,8 @@ public partial class Game
     public double? AverageRating { get; set; }
 
     [StringLength(526)]
-    public string? CoverPicture { get; set; }
+    public string CoverPicture { get; set; }
+
+    [InverseProperty("Game")]
+    public virtual ICollection<PersonGameList> PersonGameLists { get; } = new List<PersonGameList>();
 }

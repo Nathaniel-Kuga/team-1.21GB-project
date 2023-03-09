@@ -1,4 +1,11 @@
 --Down Script
+ALTER TABLE PersonGameList DROP CONSTRAINT FK_PersonID;
+ALTER TABLE PersonGameList DROP CONSTRAINT FK_GameID;
+ALTER TABLE PersonGameList DROP CONSTRAINT FK_ListKindID;
+ALTER TABLE PersonGameList DROP CONSTRAINT FK_ListNameID;
 
+DROP TABLE [GamePlayListType];
+DROP TABLE [ListName];
+DROP TABLE [PersonGameList];
 DROP TABLE [Person];
 DROP TABLE [Game];

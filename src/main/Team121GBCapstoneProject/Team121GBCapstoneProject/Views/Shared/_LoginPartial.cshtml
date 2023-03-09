@@ -3,9 +3,26 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+
 <ul class="navbar-nav .d-flex .flex-row">
     @if (SignInManager.IsSignedIn(User))
     {
+        <li class="nav-item">
+            <form id="searchForm" action="/Search/Results/">
+                <input type="text" name="query" id="searchInput" placeholder="Search...">
+                <button type="submit" id="searchButton" class="btn btn-outline-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+
+            @*            <form action="/api/Game/" method="get">
+                <input type="text" name="query" placeholder="Search...">
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>*@
+        </li>
+
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
         </li>
@@ -25,6 +42,10 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                 <li>
                     <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account Preferences</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <a class="dropdown-item" asp-controller="GamesLists" asp-action="Index">Game Lists</a>
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>

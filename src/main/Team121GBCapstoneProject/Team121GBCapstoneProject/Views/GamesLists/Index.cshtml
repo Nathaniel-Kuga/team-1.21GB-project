@@ -1,0 +1,143 @@
+@model Team121GBCapstoneProject.ViewModels.UserListsViewModel;
+
+@{
+    ViewData["Title"] = "Games Lists";
+}
+
+
+<div style="float: right">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddListForm">Add List</button>
+</div>
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div id="errorMsg">
+        <div class="card-body text-danger">
+            <span>
+                <h2 style="display: inline-block">@ViewBag.ErrorMessage</h2>
+            </span>
+        </div>
+    </div>
+}
+else if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div id="successMsg">
+        <div class="card-body text-success">
+            <span>
+                <h2 style="display: inline-block">@ViewBag.Message</h2>
+            </span>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="AddListForm" tabindex="-1" aria-labelledby="jobFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jobFormModalLabel">Add List!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <form id="addListForm" method="post">
+                        <div>
+                            <label for="listType">List Type</label>
+                            <br />
+                            <select id="listType" name="listTypeId">
+                                <option value="1">Currently Playing</option>
+                                <option value="2">Complete</option>
+                                <option value="3">Want to Play</option>
+                                <option value="4">Custom</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="customListName">Custom List name</label>
+                            <br />
+                            <input id="customListName" name="listName" type="text" value="" maxlength="64" />
+                        </div>
+                        @* <input type="hidden" name="userVMP" value="@Model" /> *@
+                        <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
+                        <input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary"
+                            value="Add List" />
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div id="userLists">
+    @if (Model.UsersLists.Count != 0)
+    {
+        @foreach (var list in @Model.UsersLists)
+        {
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            @list.First().ListName.NameOfList
+                        </th>
+                        @if(list.First().ListKind.Id == 4)
+                        {
+                        <th>
+                            <div style="float: right">
+                                <button class="btn btn-danger" id="deleteList@list.ListName.NameOfList" data-bs-toggle="modal"
+                                    data-bs-target="#deleteListFormModal">Delete List</button>
+                            </div>
+                        </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var game in list)
+                    {
+                        if (Model.UsersLists.Count != 0 && game.Game != null)
+                        {
+                            <tr>
+                                <td>@game.Game.Title;</td>
+                                <td>@game.Game.Description</td>
+                                <td>@game.Game.YearPublished</td>
+                                <td>@game.Game.EsrbratingId</td>
+                                <td>@game.Game.AverageRating</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    }
+</div>
+
+<div class="modal fade" id="deleteListFormModal" tabindex="-1" aria-labelledby="deleteListFormModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteListFormModalLabel">Delete a List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <form id="deleteListForm" method="post">
+                        <div>
+                            <h3 class="text-danger">Are you sure you want to permanently delete this list? </h3>
+                            <h5>Please type the name of the list you would like to delete below to Confirm.</h5>
+                            <br>
+                            <input id="deleteListName" type="text" name="listName" value="" maxLength="64" required />
+                        </div>
+                        <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
+                        <input id="formSubmit" type="submit" asp-action="DeleteList" class="btn btn-danger"
+                            value="Delete List" />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

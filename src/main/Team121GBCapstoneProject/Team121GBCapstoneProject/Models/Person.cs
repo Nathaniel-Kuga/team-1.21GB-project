@@ -14,26 +14,9 @@ public partial class Person
     public int Id { get; set; }
 
     [Column("AuthorizationID")]
-    public int? AuthorizationId { get; set; }
+    [StringLength(450)]
+    public string AuthorizationId { get; set; }
 
-    [StringLength(64)]
-    public string? FirstName { get; set; }
-
-    [StringLength(64)]
-    public string? LastName { get; set; }
-
-    [StringLength(64)]
-    public string? Username { get; set; }
-
-    [StringLength(64)]
-    public string? Email { get; set; }
-
-    [StringLength(256)]
-    public string? ProfilePicture { get; set; }
-
-    [StringLength(526)]
-    public string? ProfileBio { get; set; }
-
-    [Column("RoleID")]
-    public int? RoleId { get; set; }
+    [InverseProperty("Person")]
+    public virtual ICollection<PersonGameList> PersonGameLists { get; } = new List<PersonGameList>();
 }

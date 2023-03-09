@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Team121GBCapstoneProject.Areas.Identity.Data
+@model DalleVM
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Dalle Page";
+}
+
+<div class="row">
+    <form id="promptForm">
+        <div class="form-floating mb-3">
+            <input id="userPrompt" asp-for="@Model.Prompt" class="form-control" placeholder="Please enter your profile image prompt" required />
+            <label asp-for="@Model.Prompt" class="form-label"></label>
+            <span asp-validation-for="@Model.Prompt" class="text-danger"></span>
+        </div>
+        <div>
+            <button id="submitPromptButton" type="submit" class="w-100 btn btn-lg btn-primary" onclick="dalleClick()">Generate Images</button>
+        </div>
+    </form>
+</div>
+
+<br />
+<div class="row">
+        <div id="imageHere"></div>
+        <button id="applyProfilePhoto" hidden="" class="btn btn-primary center" onclick="dalleModalOpen()">Apply To Profile Image</button>
+</div>
+
+<div class="modal fade" id="DalleModal" tabindex="-1" role="dialog" aria-labelledby="DalleModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">How to Apply to Profile Photo</h5>
+                <button type="button" class="close" onclick="dalleModalClose()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>In order to add this image to your profile picture you need to</p>
+                <ol>
+                    <li>Close this modal, right click the image, and click <b>Save Image As</b></li>
+                    <ul>
+                        <li>Make sure you don't click on the <b>Back to Profile Page</b> button just yet as that will delete the image</li>
+                        <li>Make sure to save the image with a memorable name and in a place you know</li>
+                    </ul>
+                    <li>After you have saved the image either click on the back button bellow or your web browsers back button</li>
+                    <li>On the profile page click the <b>Choose Image</b> button and find your image in your files</li>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="dalleModalClose()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script type="text/javascript" src="~/js/Dalle.js"></script>
+}

@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.Models;
@@ -22,6 +24,11 @@ public class HomeController : Controller
         GameInfo gameList = new GameInfo();
         gameList.games = _gameRepository.GetTrendingGames(10);
         return View("Index", gameList);
+    }
+
+    public IActionResult GenerateImage()
+    {
+        return View();
     }
 
     public IActionResult Privacy()

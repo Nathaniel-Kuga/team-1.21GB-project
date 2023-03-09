@@ -81,7 +81,7 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var firstName = user.FirstName;
             var lastName = user.LastName;
-            var profilePicture = user.ProfilePicture;
+            var rofilePicture = user.ProfilePicture;
 
             Username = userName;
 

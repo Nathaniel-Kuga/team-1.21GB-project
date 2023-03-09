@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Team121GBCapstoneProject", "Team121GBCapstoneProject\Team121GBCapstoneProject.csproj", "{2AA2C016-FCA0-4E24-AD7B-ADCF6F04EC49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team121GBNUinitTest", "Team121GBNUinitTest\Team121GBNUinitTest.csproj", "{FF351014-1200-405E-8C5B-0F89D0D46ACA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Team121GBNUnitTest", "Team121GBNUinitTest\Team121GBNUnitTest.csproj", "{FF351014-1200-405E-8C5B-0F89D0D46ACA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

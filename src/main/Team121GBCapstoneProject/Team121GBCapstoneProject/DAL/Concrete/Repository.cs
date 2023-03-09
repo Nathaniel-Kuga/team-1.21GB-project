@@ -77,6 +77,7 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             {
                 throw new ArgumentNullException("Entity must not be null to add or update");
             }
+            //_context.Attach(entity);
             _context.Update(entity);
             _context.SaveChanges();
             return entity;
