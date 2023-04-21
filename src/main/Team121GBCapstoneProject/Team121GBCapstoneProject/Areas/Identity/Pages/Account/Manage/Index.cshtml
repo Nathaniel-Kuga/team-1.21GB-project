@@ -16,45 +16,38 @@
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.FirstName" class="form-control" placeholder="Please enter your first name" required />
+                <input id="FirstName" asp-for="Input.FirstName" class="form-control" placeholder="Please enter your first name" required />
                 <label asp-for="Input.FirstName" class="form-label"></label>
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-floating mb-3">
-                <input asp-for="Input.LastName" class="form-control" placeholder="Please enter your last name" required />
+                <input id="LastName" asp-for="Input.LastName" class="form-control" placeholder="Please enter your last name" required />
                 <label asp-for="Input.LastName" class="form-label"></label>
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-floating mb-3">
                 <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
+            <br/>
             <div class="form-floating mb-3">
                 <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="card">
-                <div class="card-title">
-                    <div class="card-header">
-                        <h3>Profile Bio</h3>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <input asp-for="Input.ProfileBio" class="form-control"
-                           placeholder="@Model.Input.ProfileBio" maxlength="501" />
-                    <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
-                </div>
+            <br/>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ProfileBio" class="form-control" placeholder="@Model.Input.ProfileBio" maxlength="500" />
+                <label asp-for="Input.ProfileBio" class="form-label"></label>
+                <span asp-validation-for="Input.ProfileBio" class="text-danger"></span>
             </div>
-            <button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-            @*<div class="form-floating mb-3">*@
-            @*                <input asp-for="Input.ProfileUsername" class="form-control" placeholder="@Model.Input.ProfileUsername" />
-            <label asp-for="Input.ProfileUsername" class="form-label"></label>
-            <span asp-validation-for="Input.ProfileUsername" class="text-danger"></span>
-            </div>*@
-            @*<button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>*@
+
+            @*<button id="update-profile-bio-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>*@
+
         </div>
-        <div class="col-md-6">
+        <div class="card col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 @*<label asp-for="Input.ProfilePicture" style="width: 100%;"></label>*@
@@ -69,7 +62,6 @@
                 <input type="file"
                        accept=".png,.jpg,.jpeg"
                        asp-for="Input.ProfilePicture"
-                       class="form-control"
                        style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
                        onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
                 <span asp-validation-for="Input.ProfilePicture" class="text-danger"></span>
@@ -91,7 +83,7 @@
                                 <p>Using this button will have you continue on to a new page where you can input a prompt and then have Dall-e generate an image based on your prompt.</p>
                                 <p>To do so just type in your prompt into the box that says <b>Prompt</b> and then hit the <b>Generate Image</b> button once.</p>
                                 <p>After a few seconds your image will appear.</p>
-                                <br/>
+                                <br />
                             </div>
                             <div class="modal-footer">
                                 <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="GenerateImage">Create Image</a>
@@ -103,10 +95,15 @@
             </div>
         </div>
     </div>
+     <br/> 
+    <button id="update-profile-bio-button" style="padding: 10px;" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
 </form>
+
 
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script type="text/javascript" src="~/js/site.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+    <script type="text/javascript" src="~/js/Steam.js"></script>
 }

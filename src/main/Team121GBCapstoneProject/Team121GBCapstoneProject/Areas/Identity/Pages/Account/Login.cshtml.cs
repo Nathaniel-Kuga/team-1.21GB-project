@@ -14,19 +14,24 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Team121GBCapstoneProject.Services.Abstract;
 using Team121GBCapstoneProject.Areas.Identity.Data;
+using AspNetCore.ReCaptcha;
+using System.Security.Policy;
 
 namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IReCaptchaV3Service _reCaptchaV3Service;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, IReCaptchaV3Service reCaptchaV3Service)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _reCaptchaV3Service = reCaptchaV3Service;
         }
 
         /// <summary>
@@ -102,14 +107,21 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string gRecaptchaResponse, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
+            
             if (ModelState.IsValid)
             {
+                ////check the recaptcha
+                //if (!Request.Form.ContainsKey("g-recaptcha-response")) return Page();
+                //var captcha = Request.Form["g-recaptcha-response"].ToString();
+                //if (!await _reCaptchaV3Service.IsValid(captcha, "https://www.google.com/recaptcha/api/siteverify")) return Page();
+
+                // if (gRecaptchaResponse == null) return Page();
+                // if (!_reCaptchaV3Service.IsValid(gRecaptchaResponse, "https://www.google.com/recaptcha/api/siteverify").Result) return Page();
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);

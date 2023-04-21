@@ -23,25 +23,31 @@ using Team121GBCapstoneProject.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
+var reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatform:reCAPTCHAV3SecretKey"];
 var DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
+var SteamSecretKey = builder.Configuration["SteamIntegration:ApiKey"];
 var SendGridKey = builder.Configuration["SendGridKey"];
 var igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
 var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
 
 builder.Services.AddHttpClient();
 // Add services to the container.
-builder.Services.AddScoped<IReCaptchaService, ReCaptchaService>(recaptcha => new ReCaptchaService(reCAPTCHASecretKey,
+builder.Services.AddScoped<IReCaptchaService, ReCaptchaV2Service>(recaptcha => new ReCaptchaV2Service(reCAPTCHASecretKey,
                                                                              new HttpClient()
                                                                              {
                                                                                  BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify")
                                                                              }));
+builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha => 
+                                                                    new ReCaptchaV3Service(reCAPTCHAV3SecretKey, 
+                                                                    recaptcha.GetRequiredService<IHttpClientFactory>()));
 
 // Add Swagger middleware
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
+builder.Services.AddScoped<IsteamService, SteamService>( s => new SteamService(SteamSecretKey));
 
 var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -65,7 +71,9 @@ builder.Services.AddDbContext<GPDbContext>(options => options
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); //Register all generic repositories
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-builder.Services.AddScoped<IPersonGameListRepository, PersonGameListRepository>();
+builder.Services.AddScoped<IPersonListRepository, PersonListRepository>();
+builder.Services.AddScoped<IListKindRepository, ListKindRepository>();
+builder.Services.AddScoped<IGameRecommender, GameRecommender>();
 
 builder.Services.AddSwaggerGen();
 
@@ -78,6 +86,17 @@ builder.Services.AddScoped<IDalleService, DalleService>();
 
 //var openAiService = builder.Services.BuildServiceProvider().GetRequiredService<IOpenAIService>();
 //openAiService.SetDefaultModelId(Models.Davinci);
+builder.Services.AddAuthentication()
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Identity/Account/Login";
+        options.LogoutPath = "/Identity/Account/Logout";
+    })
+    .AddSteam(options =>
+    {
+        options.CorrelationCookie.SameSite = SameSiteMode.None;
+        options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+    });
 
 
 var app = builder.Build();
@@ -111,6 +130,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 // If program says "Index Not Found" run: dotnet watch run (only on VS 2022)

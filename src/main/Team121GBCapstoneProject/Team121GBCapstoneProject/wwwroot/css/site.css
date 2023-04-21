@@ -1,3 +1,5 @@
+/*This stylesheet is not currently being used*/
+
 html {
   font-size: 14px;
 }
@@ -8,7 +10,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -21,20 +27,192 @@ body {
   margin-bottom: 60px;
 }
 
+.navbar {
+    background-color: #3f3e56 !important; /* set background color  */
+    padding: 10px; /* add some padding to the navbar */
+}
+
+.navbar a {
+    color: white;
+}
+
+.nav-item.dropdown {
+    color: black !important;
+}
+
+
 .center {
-    margin: auto;
-    padding: 10px;
+  margin: auto;
+  padding: 10px;
 }
+
+.loggedInOrOut {
+    height: 50px;
+    width: 200px;
+    background-color: grey;
+    color: white;
+    font-weight: bolder;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 10px;
+    font-size: larger;
+}
+
+.createUser {
+    height: 50px;
+    width: 200px;
+    background-color: dodgerblue;
+    color: white;
+    font-weight: bolder;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 10px;
+    font-size: larger;
+}
+
+/*Hover*/
+.hovertext {
+    position: relative;
+    border-bottom: 1px dotted black;
+}
+
+    .hovertext:before {
+        content: attr(data-hover);
+        visibility: hidden;
+        opacity: 0;
+        width: 140px;
+        background-color: #353340;
+        color: #fff;
+        text-align: left;
+        border-radius: 5px;
+        padding: 5px 0;
+        transition: opacity 1s ease-in-out;
+        position: absolute;
+        z-index: 10;
+        left: 100%;
+        top: -750%;
+    }
+
+.hovertext:hover:before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hovertext2 {
+    position: relative;
+    border-bottom: 1px dotted black;
+}
+
+    .hovertext2:before {
+        content: attr(data-hover);
+        visibility: hidden;
+        opacity: 0;
+        width: 140px;
+        background-color: #353340;
+        color: #fff;
+        text-align: left;
+        border-radius: 5px;
+        padding: 5px 0;
+        transition: opacity 1s ease-in-out;
+        position: absolute;
+        z-index: 10;
+        left: 100%;
+        top: auto;
+    }
+
+.hovertext2:hover:before {
+    opacity: 1;
+    visibility: visible;
 }
 
 
-/*Search Bar */
+/*Search Bar*/
 .navbar-search .input-group {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .navbar-search .form-control {
-    flex: 1;
+  flex: 1;
 }
 
+
+
+
+/* The Slider - NOT USED */
+/*.switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 34px;
+    margin-right: 10px;
+}*/
+
+/* Hide default HTML checkbox */
+/*.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}*/
+
+/* The slider */
+/*.slider {
+    position: relative;
+    cursor: pointer;
+    width: 60px;
+    height: 34px;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}*/
+
+/* Rounded sliders */
+/*.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.slider-text {
+    font-size: 14px;
+    line-height: 1
+}*/
+
+/* * div spacing */
+div {
+  padding: 10px;
+}
+
+.card.redtoorange-gradient {
+    background-image: linear-gradient(red, orange);
+}

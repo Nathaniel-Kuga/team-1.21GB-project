@@ -1,0 +1,68 @@
+﻿@page
+@using Team121GBCapstoneProject.Areas.Identity.Data
+@using Team121GBCapstoneProject.Utilities
+@model ExternalLoginsModel
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Manage your external logins";
+    ViewData["ActivePage"] = ManageNavPages.ExternalLogins;
+
+    SteamHelper helper = new SteamHelper(UserManager);
+    string steamId = helper.GetSteamId(User);
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+@if (Model.CurrentLogins?.Count > 0)
+{
+    <h3>Registered Logins</h3>
+    <table class="table">
+        <tbody>
+            @foreach (var login in Model.CurrentLogins)
+            {
+                <tr>
+                    @*<td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>*@
+                    <td><button class="btn btn-primary" onclick="steamLoad()" id="finalBtn">Display Info</button></td>
+                    <input id="steamId" type="hidden" value="@steamId"/>
+                    <td id="profileImage"></td>
+                    <td id="profileName"></td>
+                    <td>
+                        @if (Model.ShowRemoveButton)
+                        {
+                            <form id="@($"remove-login-{login.LoginProvider}")" asp-page-handler="RemoveLogin" method="post">
+                                <div>
+                                    <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden"/>
+                                    <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden"/>
+                                    <button type="submit" class="btn btn-danger" title="Remove this @login.ProviderDisplayName login from your account" onlcick="">Log out</button>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            @: &nbsp;
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (Model.OtherLogins?.Count > 0)
+{
+    <h4>Log in with:</h4>
+    <hr />
+    <form id="link-login-form" asp-page-handler="LinkLogin" method="post" class="form-horizontal">
+        <div id="socialLoginList">
+            <p>
+                @foreach (var provider in Model.OtherLogins)
+                {
+                    <button id="@($"link-login-button-{provider.Name}")" type="submit" value="@provider.DisplayName" class="img-fluid btn" name="provider" title="Log in using your @provider.DisplayName account"><img src="/images/steam_button_icon_151838.png" width="150px" height="50px" style="object-fit:cover" /></button>
+                }
+            </p>
+        </div>
+    </form>
+}
+
+@section scripts
+{
+    <script type="text/javascript" src="~/js/Steam.js"></script>
+}

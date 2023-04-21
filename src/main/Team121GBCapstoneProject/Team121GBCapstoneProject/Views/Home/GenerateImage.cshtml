@@ -12,8 +12,10 @@
         <div class="form-floating mb-3">
             <input id="userPrompt" asp-for="@Model.Prompt" class="form-control" placeholder="Please enter your profile image prompt" required />
             <label asp-for="@Model.Prompt" class="form-label"></label>
-            <span asp-validation-for="@Model.Prompt" class="text-danger"></span>
+            <span asp-validation-for="@Model.Prompt"  class="text-danger"></span>
         </div>
+      
+        <input type="hidden" id="dalleRecaptcha"  name="gRecaptchaResponse" />
         <div>
             <button id="submitPromptButton" type="submit" class="w-100 btn btn-lg btn-primary" onclick="dalleClick()">Generate Images</button>
         </div>
@@ -22,8 +24,8 @@
 
 <br />
 <div class="row">
-        <div id="imageHere"></div>
-        <button id="applyProfilePhoto" hidden="" class="btn btn-primary center" onclick="dalleModalOpen()">Apply To Profile Image</button>
+    <div id="imageHere"></div>
+    <button id="applyProfilePhoto" hidden="" class="btn btn-primary center" onclick="dalleModalOpen()">Apply To Profile Image</button>
 </div>
 
 <div class="modal fade" id="DalleModal" tabindex="-1" role="dialog" aria-labelledby="DalleModalTitle" aria-hidden="true">
@@ -58,4 +60,7 @@
 @section Scripts
     {
     <script type="text/javascript" src="~/js/Dalle.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcR_-YkAAAAAIR4vU4A-D3bq9NjQvyv129J7Azj"></script>
+    <script type="text/javascript" src="~/js/reCAPTCHAV3.js"></script>
+
 }

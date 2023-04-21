@@ -3,97 +3,163 @@
 
 // Write your JavaScript code.
 
-// Search feature
+
+// Search Feature
 $(document).ready(function () {
     $("#searchButton").click(function (event) {
 
+        console.log("Search button has been clicked");
+
         event.preventDefault(); // prevent the default form submission behavior
         var query = $("#searchInput").val(); // get the value from the search input field
-
-        $.ajax({
-            type: "GET",
-            url: "/api/Game",
-            data: { query: query }, // pass the search query as a parameter to the API Controller
-            dataType: "json",
-            success: function (data) {
-                if (data.length === 0) {
-                    // Display "No results found" message
-                    $("#gameTableBody").html("<tr> <td colspan=\"4\" style=\"text-align: center; color: gray;\">No results found</td></tr>");
-                } else {
-
-                    // redirect to the SearchResults page
-                    //window.location.href = '/Search/Results/';
-
-                    $("#gameTableBody").empty(); // clear the table body before populating with new data
-                    $.each(data,
-                        function(i, game) {
-                            // resize cover image
-                            var resizedCoverArt = game.gameCoverArt.replace("thumb", "logo_med");
-
-                            var row = `<tr>
-                                    <td><img src="${resizedCoverArt}"></td>
-                                    <td>${game.gameTitle}</td>
-                                    <td><a href="${game.gameWebsite}">${game.gameWebsite}"</a></td>
-                                    <td><button class="btn btn-primary">Add Game</button></td>
-                               </tr>`;
-                            $("#gameTableBody").append(row);
-                        });
-
-                    // redirect to the search results page after the ajax call is successful
-                    //window.location.href = "/Search/Results";
-                }
-            }
-        });
+        let $platform = $("#platformSelectList").val() ?? ""; // * get the platform value
+        let $genre = $("#genreSelectList").val() ?? "";
+        let $esrbRatingId = $("#esrbRatingSelectList").val() ?? 0;
+        // navigate to query url
+        var location = "/Search/Results/?query=" + encodeURIComponent(query) + "&platform=" + encodeURIComponent($platform) + "&genre=" + encodeURIComponent($genre) + "&esrbRating=" + encodeURIComponent($esrbRatingId);
+        window.location.href = location;
     });
 });
 
+$(document).ready(function () {
+    if (window.location.href.includes("/Search/Results/")) {
 
-// Attempt 2
-//$(document).ready(function () {
-//    $("#searchButton").click(function (event) {
-//        event.preventDefault(); // prevent the default form submission behavior
-//        var query = $("#searchInput").val(); // get the value from the search input field
+        var urlParams = new URLSearchParams(window.location.search);
+        var query = urlParams.get('query');
+        let platform = urlParams.get('platform');
+        let genre = urlParams.get('genre');
+        let esrbRating = urlParams.get('esrbRating');
 
-//        window.location.href = "/Search/Results";
+        console.log("Search: ", query, "Platform: ", platform, "Genre: ", genre, "EsrbRating: ", esrbRating);
 
-//        $.ajax({
-//            type: "GET",
-//            url: "/api/Game",
-//            data: { query: query }, // pass the search query as a parameter to the API Controller
-//            dataType: "json",
-//            success: function (data) {
-//                // dynamically create the table
-//                var table = $("<table/>").addClass("table table-hover");
-//                var tableHead = $("<thead/>").append("<tr><th></th><th>Title</th><th>Website</th><th></th></tr>");
-//                var tableBody = $("<tbody/>");
-//                table.append(tableHead);
-//                table.append(tableBody);
+        if (query != null) {
+            displaySearchResults(query, platform, genre, esrbRating);
+        } else {
+            console.log("No search query provided");
+        }
+    }
+});
 
-//                $.each(data, function (i, game) {
-//                    // resize cover image
-//                    var resizedCoverArt = game.gameCoverArt.replace("thumb", "logo_med");
-
-//                    var row = `<tr>
-//                                    <td><img src="${resizedCoverArt}"></td>
-//                                    <td>${game.gameTitle}</td>
-//                                    <td><a href="${game.gameWebsite}">${game.gameWebsite}"</a></td>
-//                                    <td><button class="btn btn-primary">Add Game</button></td>
-//                               </tr>`;
-//                    tableBody.append(row);
-//                });
-
-//                // remove the previous table (if any) and add the new one
-//                $("#gameTable").empty().append(table);
-
-//                // redirect to the search results page after the ajax call is successful
-//                //window.location.href = "/Search/Results";
-//            }
-//        });
-//    });
-//});
+// DALLE
 function dalleModalOpen() {
     $('#DalleModal').modal('show');
 }
 function dalleModalClose() {
     $('#DalleModal').modal('hide');
 }
+
+
+
+//$('#dark-mode-toggle').click(function () {
+//    // toggle the dark mode
+//    $('body').toggleClass('dark-mode');
+
+//    // save the user's preference
+//    if ($('body').hasClass('dark-mode')) {
+//        localStorage.setItem('dark-mode-enabled', 'true');
+//    } else {
+//        localStorage.setItem('dark-mode-enabled', 'false');
+//    }
+
+//    darkmode.toggle();
+//    console.log("dark mode activated: ", darkmode.isActivated()); // should return true
+//});
+
+// ATTEMPT 2
+
+//// check the user's preference on page load
+//$(document).ready(function () {
+//    var darkModeEnabled = localStorage.getItem('dark-mode-enabled');
+//    if (darkModeEnabled === 'true') {
+//        var sliderBefore = $('.slider:before');
+//        sliderBefore.css('left', '34px');
+
+//        if (!darkmode.isActivated) {
+//            darkmode.toggle();
+//        }
+//    } else {
+//        if (darkmode.isActivated) {
+//            darkmode.toggle();
+//        }
+//    }
+
+//    // localStorage.setItem('dark-mode-enabled', 'true');
+
+//    // update the state of the toggle button
+//    //var toggleSwitch = $('#dark-mode-toggle input[type="checkbox"]');
+//    //if (darkmode.isActivated()) {
+//    //    toggleSwitch.prop('checked', true);
+//    //} else {
+//    //    toggleSwitch.prop('checked', false);
+//    //}
+//});
+
+//$('#dark-mode-toggle').click(function () {
+
+//    darkmode.toggle();
+//    console.log("dark mode activated: ", darkmode.isActivated()); // should return the mode
+
+//    // update the state of the toggle button
+//    //var toggleSwitch = $('#dark-mode-toggle input[type="checkbox"]');
+
+//    if (darkmode.isActivated()) {
+//        localStorage.setItem('dark-mode-enabled', 'true');
+//    } else {
+//        localStorage.setItem('dark-mode-enabled', 'false');
+//    }
+//});
+
+
+// *** ATTEMPT 3 ***
+
+//$(document).ready(function () {
+//    var darkModeEnabled = localStorage.getItem('dark-mode-enabled');
+//    if (darkModeEnabled === 'true') {
+//        var sliderBefore = $('.slider:before');
+//        sliderBefore.css('left', '26px');
+
+//        if (!darkmode.isActivated()) {
+//            darkmode.toggle();
+//        }
+//    } else {
+//        if (darkmode.isActivated()) {
+//            darkmode.toggle();
+//        }
+//    }
+
+//    $('#dark-mode-toggle').click(function () {
+//        darkmode.toggle();
+//        console.log("dark mode activated: ", darkmode.isActivated()); // should return the mode
+
+//        if (darkmode.isActivated()) {
+//            localStorage.setItem('dark-mode-enabled', 'true');
+//        } else {
+//            localStorage.setItem('dark-mode-enabled', 'false');
+//        }
+//    });
+//});
+
+$('#darkModeButton').click(function () {
+    darkmode.toggle();
+    console.log("dark mode activated: ", darkmode.isActivated());
+});
+
+
+// Darkmode.js
+// See https://darkmodejs.learn.uno/
+var options = {
+    bottom: '64px', // default: '32px'
+    right: 'unset', // default: '32px'
+    left: '32px', // default: 'unset'
+    time: '0.3s', // default: '0.3s'
+    mixColor: '#fff', // default: '#fff'
+    backgroundColor: '#fff',  // default: '#fff'
+    buttonColorDark: '#100f2c',  // default: '#100f2c'
+    buttonColorLight: '#fff', // default: '#fff'
+    saveInCookies: true, // default: true,
+    label: '🌓', // default: ''
+    autoMatchOsTheme: true // default: true
+}
+
+var darkmode = new Darkmode(options);
+darkmode.showWidget();

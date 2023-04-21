@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {
+    "jest": "29.5.0",
+    "darkreader" : "4.9.58" 
+  }
+}

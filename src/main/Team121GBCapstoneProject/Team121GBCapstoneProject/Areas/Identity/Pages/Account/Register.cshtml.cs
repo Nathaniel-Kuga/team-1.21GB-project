@@ -36,6 +36,8 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly IReCaptchaService _reCaptchaService;
         private readonly IPersonRepository _personRepository;
+        private readonly IPersonListRepository _personListRepository;
+        private readonly IListKindRepository _listKindRepository;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -44,7 +46,9 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             IReCaptchaService captchaService,
-            IPersonRepository personRepository)
+            IPersonRepository personRepository,
+            IPersonListRepository personListRepository,
+            IListKindRepository listKindRepository)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -54,6 +58,8 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _reCaptchaService = captchaService;
             _personRepository = personRepository;
+            _personListRepository = personListRepository;
+            _listKindRepository = listKindRepository;
         }
 
         /// <summary>
@@ -152,7 +158,15 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    // * add person to project db
                     _personRepository.AddPersonToProjectDb(user.Id);
+                    // * give new person their lists
+                    Person person = _personRepository.GetAll()
+                                                     .FirstOrDefault(person => person.AuthorizationId == user.Id);
+                    List<ListKind> listKinds = _listKindRepository.GetAll()
+                                                                  .Where(l => l.Id < 4)
+                                                                  .ToList();// check that this is only the default lists, not custom
+                    _personListRepository.AddDefaultListsOnAccountCreation(person, listKinds);
                     
                     _logger.LogInformation("User created a new account with password.");
 

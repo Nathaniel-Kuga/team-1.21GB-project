@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -25,6 +26,7 @@ namespace Team121GBCapstoneProject.DAL.Concrete
     ///      and allows us to apply a filter like Where when getting an IQueryable of TEntity
     /// </summary>
     /// <typeparam name="TEntity">This is the entity for which we're making a repository</typeparam>
+    [ExcludeFromCodeCoverage]
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
         // The context is private to enforce full separation, preventing a subclass from accessing
@@ -77,7 +79,6 @@ namespace Team121GBCapstoneProject.DAL.Concrete
             {
                 throw new ArgumentNullException("Entity must not be null to add or update");
             }
-            //_context.Attach(entity);
             _context.Update(entity);
             _context.SaveChanges();
             return entity;

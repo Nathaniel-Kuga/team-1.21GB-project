@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Team121GBCapstoneProject.Areas.Identity.Data;
@@ -26,6 +27,14 @@ public class HomeController : Controller
         return View("Index", gameList);
     }
 
+    public IActionResult Index1()
+    {
+        GameInfo gameList = new GameInfo();
+        gameList.games = _gameRepository.GetTrendingGames(10);
+        return View("Index1", gameList);
+    }
+
+    [Authorize]
     public IActionResult GenerateImage()
     {
         return View();

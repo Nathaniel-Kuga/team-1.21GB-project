@@ -18,5 +18,5 @@ public partial class Person
     public string AuthorizationId { get; set; }
 
     [InverseProperty("Person")]
-    public virtual ICollection<PersonGameList> PersonGameLists { get; } = new List<PersonGameList>();
+    public virtual ICollection<PersonList> PersonLists { get; } = new List<PersonList>();
 }

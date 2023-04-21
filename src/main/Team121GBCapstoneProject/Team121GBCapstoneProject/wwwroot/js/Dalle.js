@@ -1,4 +1,5 @@
-﻿
+﻿//import { onClick } from "./reCAPTCHAV3.js";
+
 function dalleModalOpen() {
 	$('#DalleModal').modal('show');
 }
@@ -57,11 +58,13 @@ $(function () {
 
 function dalleClick() {
 	const userPrompt = document.getElementById("userPrompt")
+	const recaptcha = $("#dalleRecaptcha").val();
 	if (userPrompt.value != "") {
 		console.log(userPrompt);
+		console.log(recaptcha);
 		$.ajax({
 			method: "GET",
-			url: `/api/Dalle/GetImages?prompt=${userPrompt.value}`,
+			url: `/api/Dalle/GetImages?prompt=${userPrompt.value}&gRecaptchaResponse=${recaptcha}`,
 			dataType: "json",					// data type expected in response
 			success: displayImage,
 			error: displayImage

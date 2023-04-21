@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace Team121GBNUinitTest
+namespace Team121GBNUnitTest
 {
     public class ModelValidator
     {

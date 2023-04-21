@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
-using Team121GBNUinitTest;
 
 namespace Team121GBNUnitTest
 {

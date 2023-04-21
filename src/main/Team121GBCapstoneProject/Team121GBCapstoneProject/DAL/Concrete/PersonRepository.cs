@@ -15,7 +15,7 @@ public class PersonRepository : Repository<Person>, IPersonRepository
 
     public bool AddPersonToProjectDb(string authorizationID)
     {
-        if (authorizationID == null)
+        if (string.IsNullOrEmpty(authorizationID))
         {
             return false;
         }
