@@ -3,16 +3,20 @@ using OpenAI.GPT3.ObjectModels.RequestModels;
 using OpenAI.GPT3.ObjectModels;
 using Microsoft.AspNetCore.Identity;
 using OpenAI.GPT3.Interfaces;
+using Team121GBCapstoneProject.Services.Abstract;
+using System.Net;
 
-namespace Team121GBCapstoneProject.Services;
+namespace Team121GBCapstoneProject.Services.Concrete;
 
-class DalleService : IDalleService
+public class DalleService : IDalleService
 {
     private readonly IOpenAIService _openAiService;
+    private readonly HttpClient _httpClient;
 
-    public DalleService(IOpenAIService openAiService)
+    public DalleService(IOpenAIService openAiService, HttpClient httpClient)
     {
         _openAiService = openAiService;
+        _httpClient = httpClient;
     }
 
     public async Task<string> GetImages(string prompt)
@@ -32,18 +36,36 @@ class DalleService : IDalleService
             {
                 finalImage = image.Url;
             }
-
-            //if (imageResult.Error == null)
-            //{
-            //    throw new Exception("Error processing result");
-            //}
-
             return finalImage;
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            throw new Exception("Error in GetImages method in DalleService", e);
         }
     }
+
+
+    public async Task<byte[]> TurnImageUrlIntoByteArray(string imageURL)
+    {
+        if (imageURL == null)
+        {
+            return null;
+        }
+        if (imageURL == "")
+        {
+            return null;
+        }
+        byte[] imageBytes;
+        using (_httpClient)
+        {
+            using(HttpResponseMessage response = await _httpClient.GetAsync(imageURL))
+            {
+                imageBytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+            }
+        }
+        return imageBytes;
+    }
+
+    
 }

@@ -1,0 +1,94 @@
+﻿@using Team121GBCapstoneProject.Utilities
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Team121GBCapstoneProject.Areas.Identity.Data
+@model Team121GBCapstoneProject.Models.DTO.SteamGamesDTO;
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Steam Library";
+    SteamHelper helper = new SteamHelper(UserManager);
+    string steamId = helper.GetSteamId(User);
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/SteamGames.css">
+</head>
+
+<!-- ======= Breadcrumbs ======= -->
+<section class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Steam Library</h2>
+            <ol>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li>Steam Library</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+<section class="inner-page">
+    <div class="container">
+        <div class="text-center">
+
+            <h1>Your Steam Library</h1>
+
+            @if (Model == null || Model.response == null || Model.response.games.Count() == 0)
+            {
+                <p>Sorry it appears you do not have a steam account linked. Please link your account.</p>
+                <a class="btn btn-warning" asp-area="Identity" asp-page="/Account/Manage/ExternalLogins">Link Steam Account</a>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+            }
+            else
+            {
+                <div class="flex-container">
+                    @{
+                        foreach (var game in Model.response.games)
+                        {
+                            <div class="flex-item gameContainer" value="@game.appid" data-toggle="tooltip" title="@game.name" style="padding: 2px; position: relative">
+                                <button onclick="steamModalOpen(@game.appid)" class="btn">
+                                    <img src="@string.Format("https://steamcdn-a.akamaihd.net/steam/apps/{0}/header.jpg", @game.appid)" style="height: 200px"/><br>
+                                </button>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        </div> 
+    </div>
+
+    <div class="modal fade" id="SteamModal" tabindex="-1" role="dialog" aria-labelledby="SteamModalTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Achievements</h5>
+                    <h6 class="modal-title"> Hover over an icon for more info</h6>
+                    <button type="button" class="close" onclick="steamModalClose()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="steamId" type="hidden" value="@steamId" />
+                    <div id="here" class="d-flex flex-wrap justify-content-center">
+                        @*javascript*@
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="steamModalClose()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/js/SteamAchievements.js"></script>
+}

@@ -6,6 +6,7 @@
 --Creating Person Table
 CREATE TABLE [Person] (
     [ID]              INT           PRIMARY KEY IDENTITY(1, 1),
+    [DALL-E_Credits] INT,
     [AuthorizationID] nvarchar(450)
 );
 

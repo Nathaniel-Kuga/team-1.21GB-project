@@ -1,0 +1,82 @@
+﻿@model IEnumerable<IgdbGame>
+*@{
+    ViewData["Title"] = "Speed Search Results";
+}
+<!-- ======= Breadcrumbs ======= -->
+<section class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Search</h2>
+            <ol>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li>Search</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+
+
+
+<section class="inner-page">
+    <div class="container">
+        <div id="statusMessage">
+        </div>
+        <h1 id="topOfPageHeader">Search Results</h1>
+        <div class="table-responsive">
+            <table class="table" id="gameTable">
+                <thead>
+                    <tr>
+                        <th>Cover</th>
+                        <th>Name</th>
+                        <th>Website</th>
+                        <th>Description</th>
+                        <th>Release Year</th>
+                        <th>Platform</th>
+                        <th>Genre</th>
+                    </tr>
+                </thead>
+                <tbody id="gameTableBody">
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="AddGame" tabindex="-1" aria-labelledby="gameFormModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="jobFormModalLabel">Add Game to list!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <form id="addListForm" method="post">
+                                <div>
+                                    <label for="listName">List Name</label>
+                                    <br />
+                                    <select id="listName" name="listName">
+                                    </select>
+                                </div>
+                                @*asp-action="AddList"*@
+                                <input id="formSubmit" type="submit" data-bs-dismiss="modal" class="btn btn-warning"
+                                       value="Add Game" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="~/js/search.js"></script>
+    <script src="~/js/site.js"></script>
+    <script type="module" src="~/js/addGame.js"></script>
+}
+
+
+

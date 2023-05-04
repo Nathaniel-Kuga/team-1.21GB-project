@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Identity;
 using Team121GBCapstoneProject.DAL.Concrete;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 
 namespace Team121GBCapstoneProject.Controllers
 {
@@ -26,6 +27,7 @@ namespace Team121GBCapstoneProject.Controllers
         private readonly IRepository<PersonGame> _personGameRepository;
         private readonly IRepository<ListKind> _listKindRepository;
         private readonly IPersonListRepository _personListRepository;
+        private readonly ISpeedSearch _speedSearch;
 
         private string _clientId;
         private string _bearerToken;
@@ -38,7 +40,8 @@ namespace Team121GBCapstoneProject.Controllers
                                 IRepository<PersonGame> personGameRepository,
                                 IRepository<ListKind> listKindRepository,
                                 IPersonListRepository personListRepository,
-                                IConfiguration configuration)
+                                IConfiguration configuration,
+                                ISpeedSearch speedSearch)
         {
             _userManager = userManager;
             _igdbService = igdbService;
@@ -48,6 +51,7 @@ namespace Team121GBCapstoneProject.Controllers
             _listKindRepository = listKindRepository;
             _personListRepository = personListRepository;
             _config = configuration;
+            _speedSearch = speedSearch;
         }
 
         [HttpGet]
@@ -75,6 +79,33 @@ namespace Team121GBCapstoneProject.Controllers
             }
 
             return Ok(searchResult);
+        }
+
+        [HttpGet("DisplaySpeedSearch")]
+        public async Task<ActionResult<IEnumerable<IgdbGame>>> Index(string query)
+        {
+            return Ok();
+        }
+
+        [HttpPost("SpeedSearch")]
+        public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchForGames(string query)
+        {
+            _bearerToken = _config["GamingPlatform:igdbBearerToken"];
+            _clientId = _config["GamingPlatform:igdbClientId"];
+
+
+            // Set Credentials
+            _igdbService.SetCredentials(_clientId, _bearerToken);
+
+            var resultOfSearch = await _speedSearch.SpeedSearchingAsync(query);
+
+            if (resultOfSearch is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(resultOfSearch);
+
         }
 
         [HttpGet("getUserLists")]

@@ -299,6 +299,28 @@ public class IgdbService : IIgdbService
                                                 esrbRating);
         return gamesToReturn.OrderByDescending(x => x.FirstReleaseDate);
     }
+
+    public async Task<IEnumerable<IgdbGame>> SpeedSearchAsync(int numberOfGames,
+                                                                        string platform = "",
+                                                                        string genre = "",
+                                                                        int esrbRating = 0,
+                                                                        string query = "")
+    {
+        List<IgdbGame> gamesToReturn = new List<IgdbGame>();
+
+        var gamesFromSearch = await SearchGames(query);
+        List<Game> gamesFromPersonalDb = _gameRepository.GetGamesByTitle(query);
+
+        AddGamesToDb(gamesFromPersonalDb, gamesFromSearch.ToList(), gamesToReturn, 10, "", "", -1);
+
+
+
+        /*  gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
+                                                  platform,
+                                                  genre,
+                                                  esrbRating);*/
+        return gamesFromSearch.OrderByDescending(x => x.FirstReleaseDate);
+    }
     public bool CheckForGame(List<Game> gamesToCheck, string title)
     {
         foreach (var game in gamesToCheck)

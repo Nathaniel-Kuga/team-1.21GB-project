@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Team121GBCapstoneProjects.Controllers;
@@ -39,26 +40,34 @@ public class GamesListsController : Controller
     {
         string authorizationId = _userManager.GetUserId(User);
         
+        // gets all of the users lists
         IQueryable<PersonList> userLists = _personListRepository.GetAll()
                                                                 .Join(_personRepository.GetAll(), pl => pl.PersonId, p => p.Id, (pl, p) => new { pl, p })
                                                                 .Where(x => x.p.AuthorizationId == authorizationId)
                                                                 .Select(x => x.pl);
+        // gets all of the users games from every lists
         List<PersonGame> personGames = _personGameRepository.GetAll()
                                                             .Where(pg => pg.PersonList.Person.AuthorizationId == authorizationId)
                                                             .ToList();
 
-        List<Game> curratedList = _gameRecommender.recommendGames(personGames,10);
+        // game recommendation
+        List<Game> curatedList = _gameRecommender.recommendGames(personGames,10);
 
+        // creates dictionary where key is name of list and value is a list of games (should have 3 object that could contain more than one value)
         Dictionary<string, List<PersonGame>> personGamesByListKind = personGames.GroupBy(pg => pg.PersonList.ListKind)
                                                                                 .ToDictionary(g => g.Key, g => g.ToList());
 
         List<PersonListVM> personListVMList = new List<PersonListVM>();
 
+        // will loop through the dictionary and add to the list of view models an PersonListVM object (there should be 3 items in the list by default)
+        // this will essentially be very similar to the dictionary but it will wrap items up in a view model object
         foreach (var kvp in personGamesByListKind)
         {
             PersonListVM temp = new PersonListVM(kvp.Key, kvp.Value);
             personListVMList.Add(temp);
         }
+
+        // if any lists are empty there will still be PersonListVM to add to the main list to send to the view
         List<PersonList> emptyListCheck = userLists.Where(l => l.PersonGames.Count == 0)
                                                     .ToList();
         foreach (var emptyList in emptyListCheck)
@@ -67,14 +76,15 @@ public class GamesListsController : Controller
             personListVMList.Add(temp);
         }
 
-        //personListVMList.Add({ });
-        PersonListVM curratedListVM = new PersonListVM(curratedList);
-        personListVMList.Add(curratedListVM);
+        // add the curated list to the main personListVMList
+        PersonListVM curatedListVM = new PersonListVM(curatedList);
+        personListVMList.Add(curatedListVM);
 
+        // return the main list that holds the View Model lists
         return View("Index", personListVMList);
     }
 
-   
+
     // [HttpPost]
     // public IActionResult AddList(int userId, int listTypeId, string listName)
     // {

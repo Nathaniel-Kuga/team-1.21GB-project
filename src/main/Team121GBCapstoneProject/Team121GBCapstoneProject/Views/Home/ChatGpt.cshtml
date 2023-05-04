@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Identity
+@using Team121GBCapstoneProject.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "ChatGPT page";
+}
+
+<section class="breadcrumbs">
+    <div class="container">
+        <div class="card" style="background: #333333;">
+            <div class="card-header">
+                <h1 style="color: white;">ChatGPT</h1>
+            </div>
+            <div class="card-body text-primary">
+                <h3 style="color: white;">Dislclaimer</h3>
+                <ul style="color: white;">
+                    <li>This is chatbot is powerred by OpenAI's ChatGPT.</li>
+                    <li>We strive to provide Accurate information but mistakes can and do happen.</li>
+                    <li>No sexually explicit or violent prompts: These break OpenAI's terms of service.</li>
+                    <li>For more information about ChatGPT please visit OpenAI's website: <a
+                            href="https://openai.com/blog/chatgpt">Introducing ChatGPT</a></li>
+                </ul>
+            </div>
+        </div>
+        <br>
+        <div id="chatbot">
+            <div id="responses" class="vstack gap-3" style="overflow: auto;
+                                                            height: 700px;
+                                                            display: flex;
+                                                            vertical-align: middle;
+                                                            justify-content: center;
+                                                            text-align: center;">
+                @* filled in by js *@
+            </div>
+            <div id="loadingChatGif" style="display: flex; 
+                            justify-content: center;
+                            align-items: center;" hidden>
+                <img src="~/images/orange.gif" alt="loading animation" width="100" height="100" />
+            </div>
+            <div id="messages" style="display: flex;
+                                      justify-content: center;
+                                      align-items: center;">
+                <input type="text" id="prompt" class="form-control">
+                <button class="btn btn-warning" id="send">Submit</button>
+            </div>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/ChatGpt.js"></script>
+}

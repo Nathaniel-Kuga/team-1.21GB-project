@@ -88,22 +88,22 @@ navigate to their profile page and click on a button somewhere around their prof
                         "LastName",
                         "Password"});
             table3.AddRow(new string[] {
+                        "TaliaK",
+                        "knott@example.com",
+                        "Talia",
+                        "Knott",
+                        "Password1!"});
+            table3.AddRow(new string[] {
                         "ZaydenC",
-                        "BDDTesting2@gmail.com",
+                        "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
             table3.AddRow(new string[] {
                         "DavilaH",
-                        "team121gigabytes@gmail.com",
+                        "hareem@example.com",
                         "Hareem",
                         "Davila",
-                        "Password1!"});
-            table3.AddRow(new string[] {
-                        "TaliaK",
-                        "BDDTesting1@gmail.com",
-                        "Talia",
-                        "Knott",
                         "Password1!"});
 #line 8
  testRunner.Given("the following users exist", ((string)(null)), table3, "Given ");

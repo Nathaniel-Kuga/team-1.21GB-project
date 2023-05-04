@@ -82,53 +82,53 @@ and have it open up the file explorer and let them choose an image.", Programmin
         {
 #line 9
 #line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table5.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "TaliaK",
-                        "BDDTesting1@gmail.com",
+                        "knott@example.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
-            table5.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "ZaydenC",
-                        "BDDTesting2@gmail.com",
+                        "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
-            table5.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "DavilaH",
-                        "team121gigabytes@gmail.com",
+                        "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
 #line 10
- testRunner.Given("the following users exist", ((string)(null)), table5, "Given ");
+ testRunner.Given("the following users exist", ((string)(null)), table7, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table6.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "AndreC",
                         "colea@example.com",
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
-            table6.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "JoannaV",
                         "valdezJ@example.com",
                         "Joanna",
                         "Valdez",
                         "d9u(*dsF4"});
 #line 15
- testRunner.And("the following users do not exist", ((string)(null)), table6, "And ");
+ testRunner.And("the following users do not exist", ((string)(null)), table8, "And ");
 #line hidden
         }
         

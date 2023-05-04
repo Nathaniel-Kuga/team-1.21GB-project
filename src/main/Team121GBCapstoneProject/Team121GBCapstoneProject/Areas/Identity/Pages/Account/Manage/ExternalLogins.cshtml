@@ -1,6 +1,9 @@
 ﻿@page
 @using Team121GBCapstoneProject.Areas.Identity.Data
 @using Team121GBCapstoneProject.Utilities
+@using Team121GBCapstoneProject.Services.Abstract;
+@using Team121GBCapstoneProject.Services.Concrete;
+
 @model ExternalLoginsModel
 @inject UserManager<ApplicationUser> UserManager
 @{
@@ -9,6 +12,8 @@
 
     SteamHelper helper = new SteamHelper(UserManager);
     string steamId = helper.GetSteamId(User);
+ //   var steamGames = helper.GetSteamGames(User);
+
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -21,7 +26,7 @@
             {
                 <tr>
                     @*<td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>*@
-                    <td><button class="btn btn-primary" onclick="steamLoad()" id="finalBtn">Display Info</button></td>
+                    <td><button class="btn btn-warning" onclick="steamLoad()" id="finalBtn">Display Info</button></td>
                     <input id="steamId" type="hidden" value="@steamId"/>
                     <td id="profileImage"></td>
                     <td id="profileName"></td>

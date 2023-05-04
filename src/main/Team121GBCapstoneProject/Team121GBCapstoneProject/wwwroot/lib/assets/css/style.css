@@ -12,44 +12,44 @@
 --------------------------------------------------------------*/
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    filter: invert(100%);
+  filter: invert(100%);
 }
 
 .carousel-control-prev,
 .carousel-control-next {
-    background-color: white;
+  background-color: white;
 }
 
 .card.redtoorange-gradient {
-    background-image: linear-gradient(red, orange);
+  background-image: linear-gradient(red, orange);
 }
 
 .search {
-    width: 100%;
-    position: relative;
-    display: flex;
+  width: 100%;
+  position: relative;
+  display: flex;
 }
 
 .searchTerm {
-    width: 100%;
-    border: 3px solid #c9c7c7;
-    border-right: none;
-    padding: 5px;
-    height: 20px;
-    border-radius: 5px 0 0 5px;
-    outline: none;
+  width: 100%;
+  border: 3px solid #c9c7c7;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
 }
 
 .searchButton {
-    width: 40px;
-    height: 36px;
-    border: 1px solid #c9c7c7;
-    background: #aaaaaa;
-    text-align: center;
-    color: #fff;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    font-size: 20px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #c9c7c7;
+  background: #aaaaaa;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 /*Resize the wrap to see the search bar change!*/
@@ -181,7 +181,8 @@ h6 {
   transition: all 0.5s;
   z-index: 997;
   padding: 15px 0;
-    background: #151515; /*changed by moshe*/
+  background: #151515;
+  /*changed by moshe*/
 }
 
 #header.header-scrolled,
@@ -356,7 +357,7 @@ h6 {
 * Mobile Navigation 
 */
 .mobile-nav-toggle {
-  color: #000000; 
+  color: #000000;
   font-size: 28px;
   cursor: pointer;
   display: none;
@@ -1609,3 +1610,29 @@ section {
   font-size: 13px;
   color: #fff;
 }
+
+.inner-page {
+  background-color: whitesmoke;
+}
+
+
+.identity-nav-link.active {
+  background-color: #ffc107 !important;
+  color: black !important;
+  display: block;
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-size: var(--bs-nav-link-font-size);
+  font-weight: var(--bs-nav-link-font-weight);
+  color: var(--bs-nav-link-color);
+  text-decoration: none;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+  background: 0 0;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  border-radius: var(--bs-nav-pills-border-radius);
+}
+
+/* .nav-link.active {
+  background-color: #ffc107;
+  color: black;
+} */

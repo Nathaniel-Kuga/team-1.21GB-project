@@ -77,7 +77,7 @@ namespace Standups_BDD_Tests.StepDefinitions
             _loginPage.Login();
         }
 
-        [Then(@"I am redirected to the '([^']*)' page")]
+        [Then(@"I am redirected to the '([^']*)' page"), When(@"I am redirected to the '([^']*)' page"), Given(@"I am redirected to the '([^']*)' page")]
         public void ThenIAmRedirectedToThePage(string pageName)
         {
             // how do we identify which page we're on?  We're saving that in Common, so use that data

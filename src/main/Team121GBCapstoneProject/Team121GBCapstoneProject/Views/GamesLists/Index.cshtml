@@ -23,7 +23,7 @@
     <div class="container">
         <div class="row">
             @* <div style="float: right;">
-            @* <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+            @* <button type="button" class="btn btn-warning" data-bs-toggle="modal"
             data-bs-target="#AddListForm">AddList</button>
             </div> *@
 
@@ -65,13 +65,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <h2>
                                     <th>Cover Picture</th>
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Genres</th>
                                     <th>Platforms</th>
-                                    </h2>
+                                    <th></th> <!-- add an empty column for the IGDB button -->
+                                    <th></th> <!-- add an empty column for the X button -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,6 +108,7 @@
                                             <td></td>
                                         }
                                         <td><a class="btn btn-dark" href="@personGame.Game.Igdburl" role="button">Igdb Page</a></td>
+                                        <td><button type="button" class="btn btn-danger delete-person-game" data-id="@personGame.Id">X</button></td> <!-- add the X button column -->
                                     </tr>
                                     <br />
                                 }
@@ -200,7 +201,7 @@
 </div>
 @* <input type="hidden" name="userVMP" value="@Model" />
 <input type="hidden" name="userId" value="@Model.LoggedInUser.Id" />
-<input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-primary"
+<input id="formSubmit" type="submit" asp-action="AddList" class="btn btn-warning"
 value="Add List" />
 
 </form>

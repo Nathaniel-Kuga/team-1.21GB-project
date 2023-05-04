@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Mvc;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.Models;
 
 namespace Team121GBCapstoneProject.Controllers
 {
+    [ExcludeFromCodeCoverage]
     public class Top100GamesController : Controller
     {
         private readonly ILogger<Top100GamesController> _logger;

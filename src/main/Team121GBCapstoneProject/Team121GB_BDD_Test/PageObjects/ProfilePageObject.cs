@@ -17,6 +17,8 @@ namespace Team121GB_BDD_Test.PageObjects
         public IWebElement lastNameError;
         public IWebElement profilePictureButton => _webDriver.FindElement(By.Id("Input_ProfilePicture"));
         public IWebElement profileUpload => _webDriver.FindElement(By.Id("profilePicture"));
+        public IWebElement generateDalleImageButton => _webDriver.FindElement(By.Id("generateImagePageRedirectButton")); 
+        public IWebElement findFriendsBtn => _webDriver.FindElement(By.Id("findFriendsBtn"));
 
         public string NavbarWelcomeText()
         {
@@ -49,7 +51,7 @@ namespace Team121GB_BDD_Test.PageObjects
 
         public void UploadPhoto()
         {
-            profilePictureButton.SendKeys("C:\\Users\\natel\\Documents\\SeniorProject\\team-1.21GB-project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo15Percent.png");
+            profilePictureButton.SendKeys("C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo15Percent.png");
 
         }
     }

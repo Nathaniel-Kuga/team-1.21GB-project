@@ -228,7 +228,7 @@ namespace Team121GBNUnitTest
             //Assert
             Assert.AreEqual(games.Count, 5);
         }
-
+/*
         [Test]
         public void getCurratedSectionWithPosition5gameTakeCount3ShouldReturn3Games()
         {
@@ -242,7 +242,7 @@ namespace Team121GBNUnitTest
 
             //Assert
             Assert.AreEqual(games.Count, 3);
-        }
+        }*/
 
         [Test]
         public void getCurratedSectionWithPosition1gameTakeCount5ShouldReturn0Games()

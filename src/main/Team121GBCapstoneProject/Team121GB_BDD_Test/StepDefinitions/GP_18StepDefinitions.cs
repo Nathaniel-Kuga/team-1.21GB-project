@@ -14,18 +14,28 @@ namespace Team121GB_BDD_Test.StepDefinitions
         private readonly ScenarioContext _scenarioContext;
         private readonly LoginPageObject _loginPage;
         private readonly ProfilePageObject _profilePage;
+        private readonly FriendPageObject _friendPage;
         
         public GP_18StepDefinitions(ScenarioContext context, BrowserDriver browserDriver)
         {
             _loginPage = new LoginPageObject(browserDriver.Current);
             _profilePage = new ProfilePageObject(browserDriver.Current);
+            _friendPage = new FriendPageObject(browserDriver.Current);
             _scenarioContext = context;
         }
 
-        [When(@"I navigate to the '([^']*)' page")]
+        [When(@"I navigate to the '([^']*)' page"), Given(@"I navigate to the '([^']*)' page")]
         public void WhenINavigateToThePage(string page)
         {
-            _profilePage.GoTo();
+            if(page == "Profile")
+            {
+                _profilePage.GoTo();
+            }
+
+            if (page == "Friend")
+            {
+                _friendPage.GoTo();
+            }
         }
 
 

@@ -4,6 +4,35 @@
 // Write your JavaScript code.
 
 
+// Remove game
+
+$(document).on('click', '.delete-person-game', function () {
+    var id = $(this).data('id');
+
+    console.log(`PersonGame ID: ${id}`);
+
+    // Prompt the user to confirm the delete action
+    if (confirm("Are you sure you want to delete this game?")) {
+        $.ajax({
+            url: `api/PersonGame/${id}`,
+            method: 'DELETE',
+            success: function (result) {
+                // Update the page with the new data
+                console.log("Successfully removed game");
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                // Handle any errors that may occur during the AJAX call
+                console.log("XHR, Status, Error:");
+                console.log(xhr.responseText);
+                console.log(status.responseText);
+                console.log(error.responseText);
+            }
+        });
+    }
+});
+
+
 // Search Feature
 $(document).ready(function () {
     $("#searchButton").click(function (event) {

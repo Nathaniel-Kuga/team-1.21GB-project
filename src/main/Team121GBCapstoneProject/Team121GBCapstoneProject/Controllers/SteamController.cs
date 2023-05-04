@@ -1,5 +1,7 @@
-﻿    using Microsoft.AspNetCore.Mvc;
+﻿    using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
     using Team121GBCapstoneProject.Models;
+    using Team121GBCapstoneProject.Models.DTO;
     using Team121GBCapstoneProject.Services.Abstract;
 
     namespace Team121GBCapstoneProject.Controllers
@@ -19,6 +21,22 @@
         public ActionResult<SteamUser> GetSteamUser(string id)
         {
             return Ok(_steamService.GetSteamUser(id));
+        }
+
+        [HttpGet("GetSteamAchievements")]
+        public ActionResult<List<SteamAchievement>> GetSteamAchievements(string userID, string gameID)
+        {
+            try
+            {
+                return Ok(_steamService.GetSteamAchievements(userID, gameID));
+
+            }
+            catch (HttpRequestException e)
+            {
+                Debug.WriteLine(e);
+                return Ok();
+            }
+           
         }
     }
 }

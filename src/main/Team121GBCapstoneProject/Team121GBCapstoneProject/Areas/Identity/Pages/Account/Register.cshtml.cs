@@ -167,7 +167,10 @@ namespace Team121GBCapstoneProject.Areas.Identity.Pages.Account
                                                                   .Where(l => l.Id < 4)
                                                                   .ToList();// check that this is only the default lists, not custom
                     _personListRepository.AddDefaultListsOnAccountCreation(person, listKinds);
-                    
+                    // * give person their Dalle credits
+                    person.DallECredits = 5;
+                    person = _personRepository.AddOrUpdate(person);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

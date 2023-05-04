@@ -1,0 +1,11 @@
+﻿﻿.flex-container {
+     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+     flex-direction: row;
+}
+
+.flex-item {
+    align-items: center;
+    justify-content: center;
+}

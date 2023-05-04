@@ -34,4 +34,6 @@ public interface IIgdbService
     /// <param name="esrbRating">Filter provided by client</param>
     /// <returns>Filtered list of igdbgames</returns>
     public List<IgdbGame> ApplyFiltersForNewGames(List<IgdbGame> games, string platform, string genre, int esrbRating);
+
+    public Task<IEnumerable<IgdbGame>> SpeedSearchAsync(int numberOfGames, string platform = "", string genre = "", int esrbRating = 0, string query = "");
 }

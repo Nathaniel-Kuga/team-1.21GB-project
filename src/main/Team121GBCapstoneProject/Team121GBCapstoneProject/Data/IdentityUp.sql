@@ -201,13 +201,13 @@ GO
 
 */
 
-
+/*
 CREATE TABLE [__EFMigrationsHistory] (
     [MigrationId] nvarchar(150) NOT NULL,
     [ProductVersion] nvarchar(32) NOT NULL,
     CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
 );
-
+*/
 
 
 CREATE TABLE [AspNetRoles] (
@@ -221,7 +221,7 @@ CREATE TABLE [AspNetRoles] (
 
 CREATE TABLE [AspNetUsers] (
     [Id] nvarchar(450) NOT NULL,
-    --[FirstName] nvarchar(max) NOT NULL,
+    [FirstName] nvarchar(max) NOT NULL,
     [LastName] nvarchar(max) NOT NULL,
     [ProfilePicture] varbinary(max) NOT NULL,
     [UserName] nvarchar(256) NULL,

@@ -53,6 +53,7 @@ namespace Team121GBCapstoneProject.DAL.Concrete
 
         public List<Game> GetGamesByTitle(string title)
         {
+
             if (title == "")
             {
                 List<Game> result = new List<Game>();

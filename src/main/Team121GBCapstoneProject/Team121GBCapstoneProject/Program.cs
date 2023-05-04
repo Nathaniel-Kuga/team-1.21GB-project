@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using OpenAI.GPT3.Extensions;
 using Team121GBCapstoneProject.Areas.Identity.Data;
 using Team121GBCapstoneProject.Data;
@@ -9,16 +9,12 @@ using Team121GBCapstoneProject.Services.Concrete;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.DAL.Concrete;
 using Team121GBCapstoneProject.Models;
-using Team121GBCapstoneProject.Areas.Identity.Data;
 using OpenAI.GPT3.Interfaces;
-using System;
 using OpenAI.GPT3.Managers;
-using OpenAI.GPT3.ObjectModels;
-using OpenAI.GPT3;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Http;
+using Team121GBCapstoneProject.Utilities;
+using Team121GBCapstoneProject.ProjectDataBase;
 using Team121GBCapstoneProject.Services;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,10 +37,6 @@ builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha =>
                                                                     new ReCaptchaV3Service(reCAPTCHAV3SecretKey, 
                                                                     recaptcha.GetRequiredService<IHttpClientFactory>()));
 
-// Add Swagger middleware
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
 builder.Services.AddScoped<IsteamService, SteamService>( s => new SteamService(SteamSecretKey));
@@ -58,8 +50,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
-
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
@@ -74,6 +66,8 @@ builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IPersonListRepository, PersonListRepository>();
 builder.Services.AddScoped<IListKindRepository, ListKindRepository>();
 builder.Services.AddScoped<IGameRecommender, GameRecommender>();
+builder.Services.AddScoped<IPersonGameRepository, PersonGameRepository>();
+builder.Services.AddScoped<ISpeedSearch, SpeedSearch>();
 
 builder.Services.AddSwaggerGen();
 
@@ -83,9 +77,8 @@ builder.Services.AddOpenAIService(settings =>
 });
 builder.Services.AddScoped<IOpenAIService, OpenAIService>();
 builder.Services.AddScoped<IDalleService, DalleService>();
+builder.Services.AddScoped<IChatGptService, ChatGptService>(chatgpt => new ChatGptService(chatgpt.GetRequiredService<IOpenAIService>()));
 
-//var openAiService = builder.Services.BuildServiceProvider().GetRequiredService<IOpenAIService>();
-//openAiService.SetDefaultModelId(Models.Davinci);
 builder.Services.AddAuthentication()
     .AddCookie(options =>
     {
@@ -100,7 +93,22 @@ builder.Services.AddAuthentication()
 
 
 var app = builder.Build();
-
+// ! Seed users
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        //This only works locally not on azure
+        string testUserPW = builder.Configuration["SeedUserPW"];
+        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+        throw new Exception("Couldn't seed users.");
+    }
+}
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
@@ -111,7 +119,6 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "GP API V1");
 });
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

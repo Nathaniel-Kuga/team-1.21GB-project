@@ -6,56 +6,110 @@
 @{
     ViewData["Title"] = "Dalle Page";
 }
-
-<div class="row">
-    <form id="promptForm">
-        <div class="form-floating mb-3">
-            <input id="userPrompt" asp-for="@Model.Prompt" class="form-control" placeholder="Please enter your profile image prompt" required />
-            <label asp-for="@Model.Prompt" class="form-label"></label>
-            <span asp-validation-for="@Model.Prompt"  class="text-danger"></span>
+<section class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <h2>Make your own AI Generated Profile Picture!</h2>
+            <br />
+            <h3>
+                <ul>
+                    <li>Enter a prompt such as: "Dog chasing cat in the ocean."</li>
+                    <li>Submit the prompt by clicking the Generate Images button.</li>
+                    <li>Wait for your Image to be finished!</li>
+                </ul>
+            </h3>
+            <br />
+            <h2> Rules: </h2>
+            <h3 class="text-danger">
+                <ul>
+                    <li>
+                        <b>No public figure or celebrities as prompts</b>
+                    </li>
+                    <li>
+                        <b>No violent or sexually explicit prompts</b>
+                    </li>
+                </ul>
+            </h3>
+            <br />
+            <b>These break the terms of service with OpenAI and will return an empty result.</b>
+            <br />
+            <br />
+            <h2 id="creditsCounter">@*filled in by javascript*@</h2>
+            <form id="promptForm">
+                <div class="form-floating mb-3">
+                    <input id="userPrompt" asp-for="@Model.Prompt" class="form-control"
+                        placeholder="Please enter your profile image prompt" required />
+                    <label asp-for="@Model.Prompt" class="form-label"></label>
+                    <span asp-validation-for="@Model.Prompt" class="text-danger"></span>
+                </div>
+                <br />
+                <input type="hidden" id="dalleRecaptcha" name="gRecaptchaResponse" />
+                <div>
+                    <button id="submitPromptButton" type="submit" class="w-100 btn btn-lg btn-primary">
+                        Generate Images
+                    </button>
+                </div>
+            </form>
+            <br />
         </div>
-      
-        <input type="hidden" id="dalleRecaptcha"  name="gRecaptchaResponse" />
-        <div>
-            <button id="submitPromptButton" type="submit" class="w-100 btn btn-lg btn-primary" onclick="dalleClick()">Generate Images</button>
+        <br />
+        <br />
+        <div class="row">
+            <div id="statusNotificationDiv">
+                @*<!--Filled in by javascript<-->*@
+            </div>
+            <div id="loadingAnimation" hidden style="display: flex; justify-content: center; align-items: center;">
+                <img src="@Url.Content("~/images/LoadingIcon.gif")" alt="Processing your request, please wait"
+                    width="500" height="300" />
+            </div>
+            <div id="imageHere">
+                <img id="dalleImage" src=""/>
+            </div>
+            <button id="applyProfilePhoto" hidden="" class="btn btn-warning center">
+                Apply To
+                Profile Image
+            </button>
         </div>
-    </form>
-</div>
 
-<br />
-<div class="row">
-    <div id="imageHere"></div>
-    <button id="applyProfilePhoto" hidden="" class="btn btn-primary center" onclick="dalleModalOpen()">Apply To Profile Image</button>
-</div>
-
-<div class="modal fade" id="DalleModal" tabindex="-1" role="dialog" aria-labelledby="DalleModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">How to Apply to Profile Photo</h5>
-                <button type="button" class="close" onclick="dalleModalClose()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>In order to add this image to your profile picture you need to</p>
-                <ol>
-                    <li>Close this modal, right click the image, and click <b>Save Image As</b></li>
-                    <ul>
-                        <li>Make sure you don't click on the <b>Back to Profile Page</b> button just yet as that will delete the image</li>
-                        <li>Make sure to save the image with a memorable name and in a place you know</li>
-                    </ul>
-                    <li>After you have saved the image either click on the back button bellow or your web browsers back button</li>
-                    <li>On the profile page click the <b>Choose Image</b> button and find your image in your files</li>
-                </ol>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="dalleModalClose()">Close</button>
+        <div class="modal fade" id="DalleModal" tabindex="-1" role="dialog" aria-labelledby="DalleModalTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">How to Apply to Profile Photo</h5>
+                        <button type="button" class="close" onclick="dalleModalClose()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>In order to add this image to your profile picture you need to</p>
+                        <ol>
+                            <li>Close this modal, right click the image, and click <b>Save Image As</b></li>
+                            <ul>
+                                <li>
+                                    Make sure you don't click on the <b>Back to Profile Page</b> button just yet as that
+                                    will delete the image
+                                </li>
+                                <li>Make sure to save the image with a memorable name and in a place you know</li>
+                            </ul>
+                            <li>
+                                After you have saved the image either click on the back button bellow or your web
+                                browsers back button
+                            </li>
+                            <li>
+                                On the profile page click the <b>Choose Image</b> button and find your image in your
+                                files
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="dalleModalClose()">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</section>
 
 @section Scripts
     {

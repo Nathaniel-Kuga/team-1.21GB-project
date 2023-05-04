@@ -5,5 +5,6 @@
         public string Prompt { get; set; }
 
         public string ImageURL { get; set; }
+        public int CountOfCredits { get; set; }
     }
 }

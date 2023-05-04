@@ -13,6 +13,9 @@ public partial class Person
     [Column("ID")]
     public int Id { get; set; }
 
+    [Column("DALL-E_Credits")]
+    public int? DallECredits { get; set; }
+
     [Column("AuthorizationID")]
     [StringLength(450)]
     public string AuthorizationId { get; set; }
