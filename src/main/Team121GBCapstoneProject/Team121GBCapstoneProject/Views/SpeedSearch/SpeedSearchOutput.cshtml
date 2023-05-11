@@ -1,0 +1,92 @@
+﻿@model IEnumerable<IgdbGame>
+*@{
+    ViewData["Title"] = "Speed Search Output";
+}
+<!-- ======= Breadcrumbs ======= -->
+<section class="breadcrumbs">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Speed Search Results</h2>
+            <ol>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li>Speed Search Results</li>
+            </ol>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<section class="inner-page">
+    <div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Cover</th>
+                <th scope="col">Name</th>
+                <th scope="col">Website</th>
+                <th scope="col">Description</th>
+                <th scope="col">Release Year</th>
+                <th scope="col">Platform</th>
+                <th scope="col">Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach(var game in Model)
+                {
+                    <tr>
+                        <td><img src=@game.GameCoverArt></td>
+                        <td>@game.GameTitle</td>
+                        <td><a class="btn btn-warning" href=@game.GameWebsite>IGDB Page</a></td>
+                        <td>@game.GameDescription</td>
+                        <td>@game.FirstReleaseDate</td>
+                        <td>
+                            @foreach(var platform in @game.Platforms)
+                            {
+                                <p>@platform</p>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var genre in @game.Genres)
+                            {
+                                <p>@genre</p>
+                            }
+                        </td>
+                    </tr>
+                   
+                }
+       
+            }
+        </tbody>
+    </table>
+        <div class="modal fade" id="AddGame" tabindex="-1" aria-labelledby="gameFormModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="jobFormModalLabel">Add Game to list!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <form id="addListForm" method="post">
+                                <div>
+                                    <label for="listName">List Name</label>
+                                    <br />
+                                    <select id="listName" name="listName">
+                                    </select>
+                                </div>
+                                @*asp-action="AddList"*@
+                                <input id="formSubmit" type="submit" data-bs-dismiss="modal" class="btn btn-warning"
+                                       value="Add Game" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

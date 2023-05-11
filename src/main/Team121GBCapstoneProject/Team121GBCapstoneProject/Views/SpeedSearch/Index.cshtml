@@ -37,7 +37,7 @@
                     <p>Please type the games you would like to search in the text box below, however there are some rules you must follow.</p>
                     <h3><strong>The Rules</strong></h3>
                     <p>Each game must start with a * symbol</p>
-                    <p>Each game must be spelt correctly including any special symbols</p>
+                    <p>Each game must be spelled correctly including any special symbols</p>
                     <p>Titles are case sensitive</p>
                     <h3>Below are some examples of correct searches</h3>
                     <p>*Super Mario 64</p>
@@ -46,12 +46,13 @@
                     <h5>Once you are done typing please click the submit button.</h5>
                     
                     <div style="vertical-align: center; text-align: center;">
-                        <form asp-controller="Game" asp-action="SpeedSearchForGames" method="post">
+                        <form asp-controller="SpeedSearch" asp-action="SpeedSearchOutput" method="post">
                             <label>Games: </label>
                             <br>
                             <textarea id="GameEntry" rows="5" cols="100" name="GameEntry" required></textarea>
                             <br />
-                            <input class="btn btn-warning" id="games-submit" type="submit" value="Submit" style="margin-top: 2%;">
+                            <input class="btn btn-warning" type="submit" value="Submit" style="margin-top: 2%;">
+                            @*<input class="btn btn-warning" id="games-submit" type="submit" value="Submit" style="margin-top: 2%;">*@
                         </form>
                     </div>
                  </div>

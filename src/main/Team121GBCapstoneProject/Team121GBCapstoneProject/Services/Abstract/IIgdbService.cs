@@ -36,4 +36,6 @@ public interface IIgdbService
     public List<IgdbGame> ApplyFiltersForNewGames(List<IgdbGame> games, string platform, string genre, int esrbRating);
 
     public Task<IEnumerable<IgdbGame>> SpeedSearchAsync(int numberOfGames, string platform = "", string genre = "", int esrbRating = 0, string query = "");
+
+    public double ConvertRating(double rating);
 }
