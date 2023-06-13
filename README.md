@@ -34,7 +34,7 @@
     <img src="https://user-images.githubusercontent.com/63754407/235041065-6d46b372-1fd9-4c2a-85cb-bb9f5c63e03f.png" alt="Logo" width="" height="250">
   </a>
 
-<h3 align="center">Gaming Platform</h3>
+<h3 align="center">The Ultimate Gaming Hub</h3>
 
   <p align="center">
     A web application that will allow gamers to manage their library of games as well as connect to other gamers. This application will allow the user to add games to lists and organize them. The app will also recommend games to players depending on games they have played previously. The user can also rate and review the game and look at the top 100 games by rating on the site.
@@ -83,7 +83,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Gaming Platform](https://user-images.githubusercontent.com/63754407/235043679-ba09db9d-2d06-49d4-80df-38f2c471103f.png)
+![Gaming Platform](https://github.com/moshemartinez/team-1.21GB-project/assets/63754407/f9fb0071-5233-4c29-9b30-5eb3a1e574fd)
 
 <!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `moshemartinez`, `team-1.21GB-project`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description` -->
 
