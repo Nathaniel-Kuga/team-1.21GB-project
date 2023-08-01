@@ -76,6 +76,7 @@ namespace Team121GB_BDD_Test.StepDefinitions
         {
             int check = _aiChatBotPage.CheckIfResponseExists();
             check.Should().NotBe(-1).And.BeGreaterThanOrEqualTo(1);
+            _homePage.Logout();
         }
 
         [When(@"I enter an inappropriate prompt")]

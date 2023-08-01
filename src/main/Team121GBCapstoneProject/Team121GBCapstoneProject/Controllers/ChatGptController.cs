@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OpenAI.GPT3.Interfaces;
@@ -31,6 +32,7 @@ public class ChatGptController : Controller
 
     private async Task<CreateModerationResponse> PromptModerationTask (string prompt) =>  await _openAiService.Moderation.CreateModeration(new CreateModerationRequest() {Input = prompt} );
 
+    [Authorize]
     [HttpGet("GetChatResponse")]
     public async Task<ActionResult<string>> GetChatResponse(string prompt)
     {

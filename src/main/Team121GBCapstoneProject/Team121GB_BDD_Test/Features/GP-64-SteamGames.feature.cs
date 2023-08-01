@@ -85,47 +85,47 @@ they have on steam.", ProgrammingLanguage.CSharp, ((string[])(null)));
         {
 #line 13
 #line hidden
-            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table15.AddRow(new string[] {
+            table19.AddRow(new string[] {
                         "TaliaK",
                         "knott@example.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
-            table15.AddRow(new string[] {
+            table19.AddRow(new string[] {
                         "ZaydenC",
                         "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
-            table15.AddRow(new string[] {
+            table19.AddRow(new string[] {
                         "DavilaH",
                         "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
 #line 14
- testRunner.Given("the following users exist", ((string)(null)), table15, "Given ");
+ testRunner.Given("the following users exist", ((string)(null)), table19, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                         "UserName",
                         "Email",
                         "FirstName",
                         "LastName",
                         "Password"});
-            table16.AddRow(new string[] {
+            table20.AddRow(new string[] {
                         "AndreC",
                         "colea@example.com",
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
 #line 19
- testRunner.And("the following users do not exist", ((string)(null)), table16, "And ");
+ testRunner.And("the following users do not exist", ((string)(null)), table20, "And ");
 #line hidden
         }
         
@@ -186,7 +186,7 @@ this.FeatureBackground();
  testRunner.And("I click on the Steam Games button in the navbar dropdown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 30
- testRunner.Then("I am redirected to the \'Steam Games\' page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I am redirected to the \'Steam Library\' page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

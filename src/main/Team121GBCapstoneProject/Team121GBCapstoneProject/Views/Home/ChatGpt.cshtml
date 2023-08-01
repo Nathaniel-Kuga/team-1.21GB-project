@@ -10,23 +10,74 @@
 
 <section class="breadcrumbs">
     <div class="container">
-        <div class="card" style="background: #333333;">
+       
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<div class="row">
+    <div class="col-sm-3">
+        <div id="descriptionInfo" class="card" style="background: #333333; color: white;">
             <div class="card-header">
-                <h1 style="color: white;">ChatGPT</h1>
+                <h3 style="color: white;">ChatGPT</h3>
             </div>
-            <div class="card-body text-primary">
-                <h3 style="color: white;">Dislclaimer</h3>
-                <ul style="color: white;">
-                    <li>This is chatbot is powerred by OpenAI's ChatGPT.</li>
+            <div class="card-body">
+                <h5>
+                    <b>Why use Chat Gpt?</b>
+                </h5>
+                <p>Chat Gpt can be used for
+                <ul>
+                    <li>Getting help when stuck in a game</li>
+                    <li>Learning about game lore</li>
+                    <li>Finding play style strategies for games</li>
+                    <li>And so much more!</li>
+                </ul>
+                </p>
+                <h5>
+                    <b>How to use</b>
+                </h5>
+                <p>Simply type in a question and click submit to get a answer from Chat Gpt!</p>
+                <p>
+                    <b>
+                        You can also speak your questions to Chat Gpt
+                    </b>
+                    <ul>
+                        <li>First click the record button to speak your questions.</li>
+                        <li>Then click the stop button to transcribe your questions into text.</li>
+                        <li>Finally click the submit button to ask your question.</li>
+                    </ul>
+                </p>
+
+                <h5>
+                    <b>Disclaimer</b>
+                </h5>
+                <p>
+                <ul>
+                    <li>This is chat-bot is powered by OpenAI's ChatGPT.</li>
                     <li>We strive to provide Accurate information but mistakes can and do happen.</li>
                     <li>No sexually explicit or violent prompts: These break OpenAI's terms of service.</li>
                     <li>For more information about ChatGPT please visit OpenAI's website: <a
                             href="https://openai.com/blog/chatgpt">Introducing ChatGPT</a></li>
                 </ul>
+                </p>
             </div>
         </div>
-        <br>
-        <div id="chatbot">
+    </div>
+    <div class="col-sm-9">
+        <div class="row">
+            <div id="chatbot">
+                <div id="messages" style="display: flex;
+                                      justify-content: center;
+                                      align-items: center;">
+                    <input type="text" id="prompt" class="form-control">
+                    <button id="send" class="btn btn-warning">Submit</button>
+                    <button id="recordBtn" class="btn btn-success">Record</button>
+                    <button id="stopBtn" class="btn btn-danger">Stop</button>
+                </div>
+                <div id="loadingChatGif" style="display: flex; 
+                            justify-content: center;
+                            align-items: center;" hidden>
+                <img src="~/images/orange.gif" alt="loading animation" width="200" height="200" />
+            </div>
             <div id="responses" class="vstack gap-3" style="overflow: auto;
                                                             height: 700px;
                                                             display: flex;
@@ -35,22 +86,15 @@
                                                             text-align: center;">
                 @* filled in by js *@
             </div>
-            <div id="loadingChatGif" style="display: flex; 
-                            justify-content: center;
-                            align-items: center;" hidden>
-                <img src="~/images/orange.gif" alt="loading animation" width="100" height="100" />
-            </div>
-            <div id="messages" style="display: flex;
-                                      justify-content: center;
-                                      align-items: center;">
-                <input type="text" id="prompt" class="form-control">
-                <button class="btn btn-warning" id="send">Submit</button>
-            </div>
+        </div>
+        <div class="row">
+            @* Spacing *@
         </div>
     </div>
-</section><!-- End Breadcrumbs -->
+</div>
 
 
 @section Scripts {
     <script type="text/javascript" src="~/js/ChatGpt.js"></script>
-}
+    <script type="text/javascript" src="~/js/whisper.js"></script>
+}</div>

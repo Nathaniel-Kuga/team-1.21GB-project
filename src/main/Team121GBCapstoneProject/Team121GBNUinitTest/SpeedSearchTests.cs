@@ -14,7 +14,7 @@ namespace Team121GBNUnitTest
 {
     public class SpeedSearchTests
     {
-        public static readonly string _seedFile = @"..\..\..\Data\seed.sql";
+        public static readonly string _seedFile = System.IO.Path.Combine("..", "..", "..", "Data", "seed.sql");/*@"..\..\..\Data\seed.sql";*/
         private InMemoryDbHelper<GPDbContext> _dbHelper = new InMemoryDbHelper<GPDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 
         private readonly IHttpClientFactory _httpClientFactory;

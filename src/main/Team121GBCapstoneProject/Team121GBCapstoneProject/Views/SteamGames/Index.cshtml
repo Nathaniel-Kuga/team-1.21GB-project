@@ -30,6 +30,7 @@
 </section><!-- End Breadcrumbs -->
 <section class="inner-page">
     <div class="container">
+      
         <div class="text-center">
 
             <h1>Your Steam Library</h1>
@@ -47,6 +48,19 @@
             }
             else
             {
+                <p>If you would like to add your games to your Game List please click the button below. Note: Not all games may appear in your list due to them not being found.</p>
+                <a type="button" class="btn btn-primary" asp-controller="SteamGames" asp-action="Index" id="addSteamGamesButton">Add Games to Lists</a>
+                <br />
+                <br />
+                <div id="AddGamesClicked" class="alert alert-success" style="display:none">
+                    <br />
+                    <strong>Thank you!</strong> This may take some time, our apologies. The page will reload once it is finished.
+                   @* <img src="https://giphy.com/embed/xTk9ZvMnbIiIew7IpW" width="500" height="500"/>*@
+@*                    <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/xTk9ZvMnbIiIew7IpW" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/loop-loading-loader-xTk9ZvMnbIiIew7IpW">via GIPHY</a></p>
+*@                   <img src="@Url.Content("~/images/SwirlWithoutBackground.gif")" alt="Processing your request, please wait" width="100" height="100"/>
+                </div>
+             @*     </div>*@
+                <br />
                 <div class="flex-container">
                     @{
                         foreach (var game in Model.response.games)
@@ -91,4 +105,5 @@
 @section scripts
 {
     <script type="text/javascript" src="~/js/SteamAchievements.js"></script>
+    <script type="text/javascript" src="~/js/SteamGames.js"></script>
 }

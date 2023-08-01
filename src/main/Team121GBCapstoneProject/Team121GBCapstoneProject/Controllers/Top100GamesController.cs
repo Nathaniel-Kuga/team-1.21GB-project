@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Team121GBCapstoneProject.DAL.Abstract;
 using Team121GBCapstoneProject.Models;
@@ -25,5 +26,8 @@ namespace Team121GBCapstoneProject.Controllers
 
             return View("Index", gameList);
         }
+
+        [Authorize]
+        public IActionResult ChatGpt() => View("../Home/ChatGpt");
     }
 }

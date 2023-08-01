@@ -17,7 +17,7 @@
     @*<link rel="stylesheet" href="~/Team121GBCapstoneProject.styles.css" asp-append-version="true"/>*@
 
     <!-- Favicons -->
-    <link href="~/lib/assets/img/favicon.png" rel="icon">
+    <link href="~/lib/assets/img/icons8-game-controller.png" rel="icon">
     <link href="~/lib/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -46,40 +46,19 @@
 
 <body>
 <header id="header" class="fixed-top ">
-    <div class="container d-flex align-items-center justify-content-lg-between">
+        <div class="container d-flex align-items-center justify-content-lg-between" style="height: 45px;">
 
-            <h1 class="logo me-auto me-lg-0"><a asp-area="" asp-controller="Home" asp-action="Index">GP<span></span></a></h1>
+            <h1 class="logo me-auto me-lg-0"><a asp-area="" asp-controller="Home" asp-action="Index">UGH<span></span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
                 <li><a class="nav-link scrollto active" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                @*<li><a id="chatBotButton" class="nav-link scrollto" asp-asp-controller="Home" asp-action="ChatGpt">AI powered Chat</a></li>*@
                 <li><a class="nav-link scrollto" id="Top100GamesButton" asp-area="" asp-controller="Top100Games" asp-action="Index">Top 100 Games</a></li>
-@*                <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-                <li><a class="nav-link scrollto" href="#team">Team</a></li>
-                <li class="dropdown">
-                    <a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a href="#">Drop Down 1</a></li>
-                        <li class="dropdown">
-                            <a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                            <ul>
-                                <li><a href="#">Deep Drop Down 1</a></li>
-                                <li><a href="#">Deep Drop Down 2</a></li>
-                                <li><a href="#">Deep Drop Down 3</a></li>
-                                <li><a href="#">Deep Drop Down 4</a></li>
-                                <li><a href="#">Deep Drop Down 5</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Drop Down 2</a></li>
-                        <li><a href="#">Drop Down 3</a></li>
-                        <li><a href="#">Drop Down 4</a></li>
-                    </ul>
-                </li>
-                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>*@
+                <li><a id="gamesListButton" class="dropdown-item" asp-controller="GamesLists" asp-action="Index">My Games</a></li>
+                <li><a id="chatBotButton" class="nav-link scrollto" asp-controller="Home" asp-action="ChatGpt">AI Chat</a></li>
+                <li><a id="speedSearchButton" class="nav-link scrollto" asp-controller="SpeedSearch" asp-action="Index">Speed Search</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -145,7 +124,7 @@
                     <ul>
                             <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/moshemartinez">Moshe Martinez</a></li>
                             <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/Nathaniel-Kuga">Nathaniel Kuga</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/QuintonRoan">Quinton Roan</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/QuintonRoan64">Quinton Roan</a></li>
                             <li><i class="bx bx-chevron-right"></i> <a href="https://github.com/ColeKrieske">Cole Krieske</a></li>
                     </ul>
                 </div>
@@ -220,60 +199,3 @@
 
 
 
-@*Old *@
-
-
-@*<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Team121GBCapstoneProject.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" id="mainNavbar">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo15Percent.png" /></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="Top100GamesButton" class="nav-link" asp-area="" asp-controller="Top100Games" asp-action="Index">Top 100 Games</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-<footer>
-    <div class="container">
-        &copy; 2023 - Team121GB
-    </div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>*@

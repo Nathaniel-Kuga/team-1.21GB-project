@@ -91,7 +91,7 @@ public class HomeController : Controller
     }
 
     [Authorize]
-    public IActionResult ChatGpt () => View("ChatGpt");
+    public IActionResult ChatGpt () => View();
     public IActionResult Privacy()
     {
         return View();

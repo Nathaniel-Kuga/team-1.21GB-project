@@ -60,24 +60,31 @@ $(document).ready(function () {
         let esrbRating = urlParams.get('esrbRating');
 
         console.log("Search: ", query, "Platform: ", platform, "Genre: ", genre, "EsrbRating: ", esrbRating);
-
-        if (query != null) {
-            displaySearchResults(query, platform, genre, esrbRating);
-        } else {
+        if (query === "" && platform === "" && genre === "" && esrbRating === "0") {
             console.log("No search query provided");
+        } else if (query != null) {
+            displaySearchResults(query, platform, genre, esrbRating);
         }
     }
 });
 
-// DALLE
-function dalleModalOpen() {
-    $('#DalleModal').modal('show');
-}
-function dalleModalClose() {
-    $('#DalleModal').modal('hide');
-}
 
+// Advanced Search
+$(document).ready(function () {
+    var options = {
+        html: true,
+        title: "Advanced Search",
+        //html element
+        //content: $("#popover-content")
+        content: $('[data-name="popover-content"]')
+        //Doing below won't work. Shows title only
+        //content: $("#popover-content").html()
 
+    }
+    var advancedSearchEl = document.getElementById('advancedSearchButton');
+    var popover = new bootstrap.Popover(advancedSearchEl, options);
+    console.log("Advanced search popover activated/deactivated");
+})
 
 //$('#dark-mode-toggle').click(function () {
 //    // toggle the dark mode

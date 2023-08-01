@@ -75,6 +75,8 @@ namespace Team121GBCapstoneProject.Controllers
 
         }
 
+        [Authorize]
+        public IActionResult ChatGpt() => View("../Home/ChatGpt");
         /*[Authorize]
         [HttpPost]
         public async Task<ActionResult<IEnumerable<IgdbGame>>> SpeedSearchResults(string GameEntry)

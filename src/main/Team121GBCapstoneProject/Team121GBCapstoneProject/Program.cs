@@ -18,13 +18,15 @@ using Team121GBCapstoneProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
-var reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatform:reCAPTCHAV3SecretKey"];
-var DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
-var SteamSecretKey = builder.Configuration["SteamIntegration:ApiKey"];
-var SendGridKey = builder.Configuration["SendGridKey"];
-var igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
-var igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
+string reCAPTCHASecretKey = builder.Configuration["GamingPlatform:reCAPTCHASecretKey"];
+string reCAPTCHAV3SecretKey = builder.Configuration["GamingPlatform:reCAPTCHAV3SecretKey"];
+string DalleSecretKey = builder.Configuration["OpenAIServiceOptions:ApiKey"];
+string SteamSecretKey = builder.Configuration["SteamIntegration:ApiKey"];
+string SendGridKey = builder.Configuration["SendGridKey"];
+string igdbApiClientIdKey = builder.Configuration["GamingPlatform:igdbClientId"];
+string igdbApiBearerTokenKey = builder.Configuration["GamingPlatform:igdbBearerToken"];
+string googleClientId = builder.Configuration["Authentication:Google:ClientId"];
+string googleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 
 builder.Services.AddHttpClient();
 // Add services to the container.
@@ -37,11 +39,14 @@ builder.Services.AddScoped<IReCaptchaV3Service, ReCaptchaV3Service>(recaptcha =>
                                                                     new ReCaptchaV3Service(reCAPTCHAV3SecretKey, 
                                                                     recaptcha.GetRequiredService<IHttpClientFactory>()));
 
+// Add Swagger middleware
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IIgdbService, IgdbService>();
 builder.Services.AddScoped<IsteamService, SteamService>( s => new SteamService(SteamSecretKey));
 
-var connectionString = builder.Configuration.GetConnectionString("AuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("ughAuthConnection") ?? throw new InvalidOperationException("Connection string 'AuthConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -56,7 +61,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 
 builder.Services.AddControllersWithViews();
 
-var GPconnectionString = builder.Configuration.GetConnectionString("GPConnection");
+var GPconnectionString = builder.Configuration.GetConnectionString("ughAppConnection");
 builder.Services.AddDbContext<GPDbContext>(options => options
                             .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
                             .UseSqlServer(GPconnectionString));
@@ -68,6 +73,7 @@ builder.Services.AddScoped<IListKindRepository, ListKindRepository>();
 builder.Services.AddScoped<IGameRecommender, GameRecommender>();
 builder.Services.AddScoped<IPersonGameRepository, PersonGameRepository>();
 builder.Services.AddScoped<ISpeedSearch, SpeedSearch>();
+builder.Services.AddScoped<ISteamChecker, SteamChecker>();
 
 builder.Services.AddSwaggerGen();
 
@@ -78,6 +84,7 @@ builder.Services.AddOpenAIService(settings =>
 builder.Services.AddScoped<IOpenAIService, OpenAIService>();
 builder.Services.AddScoped<IDalleService, DalleService>();
 builder.Services.AddScoped<IChatGptService, ChatGptService>(chatgpt => new ChatGptService(chatgpt.GetRequiredService<IOpenAIService>()));
+builder.Services.AddScoped<IWhisperService, WhisperService>(whisper => new WhisperService(whisper.GetRequiredService<IOpenAIService>()));
 
 builder.Services.AddAuthentication()
     .AddCookie(options =>
@@ -89,6 +96,11 @@ builder.Services.AddAuthentication()
     {
         options.CorrelationCookie.SameSite = SameSiteMode.None;
         options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+    })
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = googleClientId;
+        googleOptions.ClientSecret = googleClientSecret;
     });
 
 

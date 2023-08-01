@@ -23,9 +23,7 @@
     <div class="container">
         <div class="text-center">
             <h1 class="display-4" style="font-weight: bolder; margin-top: 5%;">Top 100 Games</h1>
-            <h3>Last Updated: February 23, 2023</h3>
-            <p>Ratings were collected from IGN.com and the title, description, and cover photo were all collected from Wikipedia</p>
-
+            <h3>This list grows with our backlog of games, so if there are less than 100 games, don't worry, it will be updated as more games are added.</h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -39,36 +37,38 @@
                 </thead>
                 <tbody>
                     @{
-                        int j = 1;
-                        @for (int i = 0; i < 100; i++)
+                        int i = 0;
+                        int count = 1;
+                        @foreach(var game in Model.games)
                         {
                             <tr>
-                                <th scope="row">@j</th>
+                                <th scope="row">@count</th>
                                 <td>
                                     @{
                                         gameInfo = null;
-                                        gameInfo += $"Release Year: {Model.games[i].YearPublished}";
+                                        gameInfo += $"Release Year: {game.YearPublished}";
                                         gameInfo += "\nGenres: ";
-                                        foreach (var genre in Model.games[i].GameGenres)
+                                        foreach (var genre in game.GameGenres)
                                         {
                                             gameInfo += $"{genre.Genre.Name} ";
                                         }
                                         gameInfo += "\n| Platforms: ";
-                                        foreach (var platform in Model.games[i].GamePlatforms)
+                                        foreach (var platform in game.GamePlatforms)
                                         {
                                             gameInfo += $"{platform.Platform.Name} ";
                                         }
                                     }
                                     <span class="hovertext2" data-hover="@gameInfo">
-                                        <img src=@($"{Model.games[i].CoverPicture}") width="200px" height="200px" />
+                                        <img src=@($"{game.CoverPicture}") width="200px" height="200px" />
                                     </span>
                                 </td>
-                                <td style="font-weight: bold;">@Model.games[i].Title</td>
-                                <td>@Model.games[i].Description</td>
-                                <td style="background-color: @Model.backgroundColor[i]; color: white; font-weight: bolder; text-align: center; font-size: larger">@Model.games[i].AverageRating</td>
+                                <td style="font-weight: bold;">@game.Title</td>
+                                <td>@game.Description</td>
+                                <td style="background-color: @Model.backgroundColor[i]; color: white; font-weight: bolder; text-align: center; font-size: larger">@game.AverageRating</td>
                             </tr>
-                            j++;
-
+                            ++i;
+                            ++count;
+                            if(i == 100) break;
                         }
                     }
                 </tbody>

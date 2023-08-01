@@ -12,7 +12,7 @@ namespace Team121GBNUnitTest;
 
 public class PersonListVMTests
 {
-    private static readonly string _seedFile = @"..\..\..\Data\seed.sql"; // relative path from where the executable is: bin/Debug/net7.0
+    private static readonly string _seedFile = System.IO.Path.Combine("..", "..", "..", "Data", "seed.sql");/*@"..\..\..\Data\seed.sql";*/ // relative path from where the executable is: bin/Debug/net7.0
     // Create this helper like this, for whatever context you desire
     private InMemoryDbHelper<GPDbContext> _dbHelper = new InMemoryDbHelper<GPDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 

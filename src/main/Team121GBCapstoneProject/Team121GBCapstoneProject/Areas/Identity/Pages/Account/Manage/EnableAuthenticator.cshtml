@@ -6,12 +6,11 @@
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
 <div>
-    <p>To use an authenticator app go through the following steps:</p>
+    <p class="toWhite">To use an authenticator app go through the following steps:</p>
     <ol class="list">
         <li>
-            <p>
+            <p class="toWhite">
                @* Download a two-factor authenticator app like Microsoft Authenticator for
                 <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> and
                 <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a>*@
@@ -21,25 +20,25 @@
             </p>
         </li>
         <li>
-            <p>@*Scan the QR Code below with your mobile device. Or enter the information below, The account name can be whatever you want we recommend Gaming Platform*@</p>
-            <p>Once Downloaded you have two different ways to set up this application. You can enter in the Account name and enter a Key or you can simply scan a Qr code with your phone.</p>
+            <p class="toWhite">@*Scan the QR Code below with your mobile device. Or enter the information below, The account name can be whatever you want we recommend Gaming Platform*@</p>
+            <p class="toWhite">Once Downloaded you have two different ways to set up this application. You can enter in the Account name and enter a Key or you can simply scan a Qr code with your phone.</p>
             <br />
-            <p style="font-weight: bolder;">If you would like to set up using the Account name and the Key please follow the instructions below. If you are using the QR code please skip over this.</p>
-            <p>To get started please tap the plus sign in the lower right hand corner and select "Enter set up key" and enter this information below</p>
-            <p>Account: (Give a name that you will notice. We recommend "Gaming Platform".)</p>
-            <p>Key: </p> <div class="alert alert-info">@Model.SharedKey</div>
+            <p class="toWhite" style="font-weight: bolder;">If you would like to set up using the Account name and the Key please follow the instructions below. If you are using the QR code please skip over this.</p>
+            <p class="toWhite">To get started please tap the plus sign in the lower right hand corner and select "Enter set up key" and enter this information below</p>
+            <p class="toWhite">Account: (Give a name that you will notice. We recommend "Gaming Platform".)</p>
+            <p class="toWhite">Key: </p> <div class="alert alert-info">@Model.SharedKey</div>
 @*            <div class="alert alert-info">Learn how to <a href="https://go.microsoft.com/fwlink/?Linkid=852423">enable QR code generation</a>.</div>*@
             <br />
-            <p style="font-weight: bolder;">If you would like to just scan the Qr Code please follow the instructions below.</p>
-            <p>To get started please tap the plus sign on the lower right corner and select "Scan QR Code". Make sure to allow the camera to be used when asked, then point your phones camera to the qr code to scan it.</p>
+            <p class="toWhite" style="font-weight: bolder;">If you would like to just scan the Qr Code please follow the instructions below.</p>
+            <p class="toWhite">To get started please tap the plus sign on the lower right corner and select "Scan QR Code". Make sure to allow the camera to be used when asked, then point your phones camera to the qr code to scan it.</p>
             
-            <p style="font-weight: bolder;">QR Code: </p>
+            <p class="toWhite" style="font-weight: bolder;">QR Code: </p>
             <div id="qrCode"></div>
             <div id="qrCodeData" data-url="@Model.AuthenticatorUri"></div>
             <br />
         </li>
         <li>
-            <p>
+            <p class="white">
                @* Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
                 with a unique code. Enter the code in the confirmation box below. *@
                 Once you have entered the information above please tap add, your two factor authentication app will provide you
@@ -61,6 +60,12 @@
         </li>
     </ol>
 </div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

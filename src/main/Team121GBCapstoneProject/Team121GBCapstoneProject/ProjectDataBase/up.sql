@@ -18,7 +18,7 @@ CREATE TABLE [ESRBRating] (
 
 CREATE TABLE [Game] (
     [ID]              INT           PRIMARY KEY IDENTITY(1, 1),
-    [Title]           NVARCHAR(64),
+    [Title]           NVARCHAR(200),
     [Description]     NVARCHAR(MAX),
     [YearPublished]   INT,
     [ESRBRatingID]    INT,

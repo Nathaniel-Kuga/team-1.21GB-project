@@ -27,7 +27,7 @@ Scenario Outline: User can navigate to new steam games page
 	And I login
 	When I click on the dropdown menu in the nav bar
 	And I click on the Steam Games button in the navbar dropdown
-	Then I am redirected to the 'Steam Games' page
+	Then I am redirected to the 'Steam Library' page
 	Examples:
 	| FirstName | Page |
 	| Talia     | Home |

@@ -55,8 +55,9 @@
             @if (listVm.ListKind != null)
             {
                 <div class="row">
-                    @* <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;"> *@
-                    <div class="card redtoorange-gradient table-responsive">
+                    <div class="card text-dark 
+                                table-responsive" 
+                         style="background:  #ffc107;">
                         <table id="@listVm.ListKind Table">
                             <thead>
                                 <tr>
@@ -110,17 +111,20 @@
                                         <td><a class="btn btn-dark" href="@personGame.Game.Igdburl" role="button">Igdb Page</a></td>
                                         <td><button type="button" class="btn btn-danger delete-person-game" data-id="@personGame.Id">X</button></td> <!-- add the X button column -->
                                     </tr>
-                                    <br />
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <br />
             }
             @if (listVm.CurratedList != null)
             {
                 <div class="row">
-                    <div class="card bg-gradient" style="background-color: #ee1535; padding: 10px;">
+                    <div class="card 
+                                text-dark" 
+                         style="background-color: #ee1535; 
+                                padding: 10px;">
                         <table>
                             <thead>
                                 <tr>
@@ -143,7 +147,6 @@
                                         <td><img src="@game.CoverPicture" alt="@game.Title Cover Image"></td>
                                         <td><a class="btn btn-dark" href="@game.Igdburl" role="button">Igdb Page</a></td>
                                     </tr>
-                                    <br />
                                 }
                             </tbody>
                         </table>
@@ -157,7 +160,7 @@
 @section Scripts
     {
     <script>
-        $(document).ready(function () {
+        /* $(document).ready(function () {
             $("tr").hover(
                 function () {
                     $(this).css("background-color", "#FF3555");
@@ -167,8 +170,7 @@
                     $(this).css("background-color", "");
                     $(this).css("border-radius", "");
                 });
-        });
-
+        });*/
     </script>
 }
 

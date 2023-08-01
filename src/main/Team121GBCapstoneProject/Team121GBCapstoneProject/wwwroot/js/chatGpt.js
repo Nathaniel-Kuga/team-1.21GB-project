@@ -1,9 +1,10 @@
+// Purpose: ChatGPT page logic.
 
-$(document).ready(function () {
-    $('#send').on('click', async function () {
-        $('#loadingChatGif').removeAttr("hidden"); 
+$(function () {
+    $('#send').on('click', async () => {
+        $('#loadingChatGif').removeAttr("hidden");
         let $prompt = $('#prompt').val();
-        $prompt.trim();
+        $prompt = $prompt.trim();
         if ($prompt === "" || $prompt === null || $prompt === undefined) {
             await sendMessageError("Please enter a prompt.");
             return;
@@ -12,11 +13,11 @@ $(document).ready(function () {
         await addUserQueryToDOM($prompt);
         await sendMessage($prompt);
     });
-    $("#prompt").keypress(async function(event) {
+    $("#prompt").on('keypress', async (event) => {
         if (event.keyCode === 13) {
-            $('#loadingChatGif').removeAttr("hidden"); 
+            $('#loadingChatGif').removeAttr("hidden");
             let $prompt = $('#prompt').val();
-            $prompt.trim();
+            $prompt = $prompt.trim();
             if ($prompt === "" || $prompt === null || $prompt === undefined) {
                 await sendMessageError("Please enter a prompt.");
                 return;
@@ -25,7 +26,7 @@ $(document).ready(function () {
             await addUserQueryToDOM($prompt);
             await sendMessage($prompt);
         }
-      });
+    });
 });
 
 async function sendMessage(prompt) {
@@ -45,7 +46,8 @@ async function sendMessageSuccess(data) {
     console.log(data);
     let $responses = $('#responses');
     let $row = $('<div></div>').addClass('card text-white bg-primary');
-    await $responses.append($row);
+    const $newDiv = await $responses.append($row);
+    $newDiv[0].scrollIntoView(true);
     typeLetter(data);
 }
 
@@ -56,6 +58,8 @@ async function sendMessageError(data) {
         alert('ChatGPT does not respond to inappropriate prompts. The bot has been disabled for this session.');
         $('#prompt').prop('disabled', true);
         $('#send').prop('disabled', true);
+        $('#recordBtn').prop('disabled', true);
+        $('#stopBtn').prop('disabled', true);
     }
     let $responses = $('#responses');
     let $row = $('<div></div>').addClass('card text-white bg-danger');
@@ -82,6 +86,6 @@ async function typeLetter(data) {
 async function addUserQueryToDOM(prompt) {
     let $responses = $('#responses');
     let msg = $('<div>').html(prompt)
-                        .addClass('card text-white bg-secondary');
+        .addClass('card text-white bg-secondary');
     $responses.append(msg);
 }

@@ -11,7 +11,7 @@ public interface IIgdbService
     Task<IEnumerable<IgdbGame>> SearchGames(string query);
     Task<IEnumerable<IgdbGame>> SearchGameWithCachingAsync(int numberOfGames, string platform, string genre, int esrbRating,    string query = "");
     public bool checkGamesFromDatabase(List<Game> gamesToCheck, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck);
-    public bool CheckForGame(List<Game> gamesToCheck, string title);
+    public bool CheckForGame(List<Game> gamesToCheck, string title, int? igdbId);
     public void AddGamesToDb(List<Game> GamesFromOurDB, List<IgdbGame> gameFromAPI, List<IgdbGame> gamesToReturn, int numberOfGamesToCheck, string platform, string genre, int esrbRating);
     /// <summary>
     /// Adds new GameGenres to db after having added a new game to db
@@ -38,4 +38,11 @@ public interface IIgdbService
     public Task<IEnumerable<IgdbGame>> SpeedSearchAsync(int numberOfGames, string platform = "", string genre = "", int esrbRating = 0, string query = "");
 
     public double ConvertRating(double rating);
+    /// <summary>
+    /// Gets a little of games that match the filters provided by the client
+    /// </summary>
+    /// <param name="platform">Filter provided by client</param>
+    /// <param name="genre">Filter provided by client</param>
+    /// <param name="esrbRating">Filter provided by client</param>
+    public Task<IEnumerable<IgdbGame>> SearchWithFiltersOnly (string platform = "", string genre = "", int esrbRating = 0);
 }

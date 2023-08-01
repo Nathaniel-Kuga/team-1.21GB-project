@@ -90,19 +90,19 @@ should be able to see their first and last name, their bio, and a list of their 
                         "Password"});
             table5.AddRow(new string[] {
                         "TaliaK",
-                        "BDDTesting1@gmail.com",
+                        "knott@example.com",
                         "Talia",
                         "Knott",
                         "Password1!"});
             table5.AddRow(new string[] {
                         "ZaydenC",
-                        "BDDTesting2@gmail.com",
+                        "clark@example.com",
                         "Zayden",
                         "Clark",
                         "Password1!"});
             table5.AddRow(new string[] {
                         "DavilaH",
-                        "team121gigabytes@gmail.com",
+                        "hareem@example.com",
                         "Hareem",
                         "Davila",
                         "Password1!"});
@@ -121,12 +121,6 @@ should be able to see their first and last name, their bio, and a list of their 
                         "Andre",
                         "Cole",
                         "0a9dfi3.a"});
-            table6.AddRow(new string[] {
-                        "JoannaV",
-                        "valdezJ@example.com",
-                        "Joanna",
-                        "Valdez",
-                        "d9u(*dsF4"});
 #line 14
  testRunner.And("the following users do not exist", ((string)(null)), table6, "And ");
 #line hidden
@@ -151,7 +145,7 @@ should be able to see their first and last name, their bio, and a list of their 
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can find button on page", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 21
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -174,19 +168,19 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
 this.FeatureBackground();
 #line hidden
-#line 22
+#line 20
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 23
+#line 21
  testRunner.And("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 24
+#line 22
  testRunner.And(string.Format("I navigate to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 25
+#line 23
  testRunner.Then("I should see a button to find users", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 26
+#line 24
  testRunner.And("I click on it it will take me to the \"/Home/FindFriends\" page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
@@ -205,7 +199,7 @@ this.FeatureBackground();
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can look up other users", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 33
+#line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -228,19 +222,19 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
 this.FeatureBackground();
 #line hidden
-#line 34
+#line 32
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 35
+#line 33
  testRunner.And("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 36
+#line 34
  testRunner.And(string.Format("I navigate to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 35
  testRunner.When("I look up a valid user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 38
+#line 36
  testRunner.Then("I will see their information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -259,7 +253,7 @@ this.FeatureBackground();
             argumentsOfScenario.Add("FirstName", firstName);
             argumentsOfScenario.Add("Page", page);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User can look up invlaid users and have nothing be returned", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 45
+#line 43
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -282,19 +276,19 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
 this.FeatureBackground();
 #line hidden
-#line 46
+#line 44
  testRunner.Given(string.Format("I am a user with first name \'{0}\'", firstName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 47
+#line 45
  testRunner.And("I login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 48
+#line 46
  testRunner.And(string.Format("I navigate to the \'{0}\' page", page), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 49
+#line 47
  testRunner.When("I look up an invalid user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 50
+#line 48
  testRunner.Then("I will see an \"Person Not Found\" error", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

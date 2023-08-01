@@ -18,18 +18,26 @@ public class AiChatBotPageObject : PageObject
 
     public IWebElement PromptInput => _webDriver.FindElement(By.Id("prompt"));
     public IWebElement SubmitPromptButton => _webDriver.FindElement(By.Id("send"));
+    public IWebElement RecordAudioButton=> _webDriver.FindElement(By.Id("recordBtn"));
+    public IWebElement StopRecordingButton => _webDriver.FindElement(By.Id("stopBtn"));
+    public IWebElement DescriptAndInformationCard => _webDriver.FindElement(By.Id("descriptionInfo"));
     public void InputPrompt(string prompt) => PromptInput.SendKeys(prompt);
 
     public int CheckIfResponseExists()
     {
         try
         {
+
             // Wait up to 10 seconds for the element to be present in the DOM
             WebDriverWait wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            // Use the CSS selector to find the element
-            IReadOnlyCollection<IWebElement> responses = wait.Until(d => d.FindElements(By.CssSelector(".card.text-white.bg-primary")));
-            responses.Should().NotBeNullOrEmpty();
-            return responses.Count();
+
+            IWebElement element = wait.Until(d => d.FindElement(By.CssSelector(".card.text-white.bg-primary")));
+            element.Should().NotBeNull();
+            //// Use the CSS selector to find the element
+            //IReadOnlyCollection<IWebElement> responses = wait.Until(d => d.FindElements(By.CssSelector(".card.text-white.bg-primary")));
+            //responses.Should().NotBeNullOrEmpty();
+            //return responses.Count();
+            return 1;
         }
         catch (Exception e)
         {

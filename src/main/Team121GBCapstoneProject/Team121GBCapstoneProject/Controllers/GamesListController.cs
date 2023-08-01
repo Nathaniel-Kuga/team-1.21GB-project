@@ -33,7 +33,10 @@ public class GamesListsController : Controller
         _personGameRepository = personGameRepository;
         _gameRecommender = gameRecommender;
     }
-
+    
+    [Authorize]
+    public IActionResult ChatGpt () => View("../Home/ChatGpt");
+    
     [Authorize]
     [HttpGet]
     public IActionResult Index()

@@ -195,14 +195,15 @@ namespace Team121GBNUnitTest
         public void CheckForGameWithMatchInTheDatabaseShouldReturnTrue()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);;
+            IRepository<Game> genericGameRepo = new Repository<Game>(_mockContext.Object);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository); ;
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Dark Souls");
             bool result;
 
             //Act
-            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 2");
+            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 2", 1);
 
             //Assert
             Assert.IsTrue(result);
@@ -212,14 +213,15 @@ namespace Team121GBNUnitTest
         public void CheckForGameWithOutMatchInTheDatabaseShouldReturnTrue()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);;
+            IRepository<Game> genericGameRepo = new Repository<Game>(_mockContext.Object);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository); ;
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("Dark Souls");
             bool result;
 
             //Act
-            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5");
+            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5", 1);
 
             //Assert
             Assert.IsFalse(result);
@@ -229,14 +231,15 @@ namespace Team121GBNUnitTest
         public void CheckForGameWithEmptySearchInTheDatabaseShouldReturnFalse()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);;
+            IRepository<Game> genericGameRepo = new Repository<Game>(_mockContext.Object);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);;
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle("");
             bool result;
 
             //Act
-            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5");
+            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5", 1);
 
             //Assert
             Assert.IsFalse(result);
@@ -246,14 +249,15 @@ namespace Team121GBNUnitTest
         public void CheckForGameWithWhiteSpaceSearchInTheDatabaseShouldReturnFalse()
         {
             //Arrange
-            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, _genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository);;
+            IRepository<Game> genericGameRepo = new Repository<Game>(_mockContext.Object);
+            IIgdbService _igdbService = new IgdbService(_httpClientFactory, _gameRepository, genericGameRepo, _esrbRatingRepository, _gameGenreRepository, _genreRepository, _gamePlatformRepository, _platformRepository); ;
             IGameRepository gameRepository = new GameRepository(_mockContext.Object);
             List<IgdbGame> gamesToReturn = new List<IgdbGame>();
             List<Game> GamesFromPersonalDB = gameRepository.GetGamesByTitle(" ");
             bool result;
 
             //Act
-            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5");
+            result = _igdbService.CheckForGame(GamesFromPersonalDB, "Dark Souls 5", 1);
 
             //Assert
             Assert.IsFalse(result);

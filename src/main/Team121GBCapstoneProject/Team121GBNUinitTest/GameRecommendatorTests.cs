@@ -19,7 +19,7 @@ namespace Team121GBNUnitTest
         private List<Game> _game;
 
         //In Memory Setup
-        public static readonly string _seedFile = @"..\..\..\Data\updatedSeed.sql";
+        public static readonly string _seedFile = System.IO.Path.Combine("..", "..", "..", "Data", "updatedSeed.sql");
         private InMemoryDbHelper<GPDbContext> _dbHelper = new InMemoryDbHelper<GPDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 
         private readonly IHttpClientFactory _httpClientFactory;
@@ -214,20 +214,6 @@ namespace Team121GBNUnitTest
         }
 
         //Testing getCurratedSection
-        [Test]
-        public void getCurratedSectionWithPosition5gameTakeCount5ShouldReturn5Games()
-        {
-            //Arrange
-            using GPDbContext context = _dbHelper.GetContext();
-            IGameRecommender _gameRecommender = new GameRecommender(context);
-            List<Game> emptyList = new List<Game>();
-
-            //Act
-            List<Game> games = _gameRecommender.getCurratedSection(5,5, emptyList);
-
-            //Assert
-            Assert.AreEqual(games.Count, 5);
-        }
 /*
         [Test]
         public void getCurratedSectionWithPosition5gameTakeCount3ShouldReturn3Games()

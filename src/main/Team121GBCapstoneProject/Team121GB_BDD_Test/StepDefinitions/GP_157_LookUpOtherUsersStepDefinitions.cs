@@ -41,7 +41,7 @@ namespace Team121GB_BDD_Test.StepDefinitions
         [When(@"I look up a valid user")]
         public void WhenILookUpAValidUser()
         {
-            _friendPage.InputEmail.SendKeys("BDDTesting1@gmail.com");
+            _friendPage.InputEmail.SendKeys("clark@example.com");
             _friendPage.FriendButton.Click();
         }
 

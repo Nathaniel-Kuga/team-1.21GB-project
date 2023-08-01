@@ -15,18 +15,18 @@ Background:
 	  | UserName | Email               | FirstName | LastName | Password  |
 	  | AndreC   | colea@example.com   | Andre     | Cole     | 0a9dfi3.a |
 
-#@notLoggedIn
-#Scenario: A visitor cannot access the AI Chat bot page.
-#	Given I am a visitor on the Home page
-#	And I am on the home page
-#	When I try to navigate to the 'ChatGPT page'
-#	Then I should be ask to login before accessing the page.
+@notLoggedIn
+Scenario: A visitor cannot access the AI Chat bot page.
+	Given I am a visitor on the Home page
+	And I am on the home page
+	When I try to navigate to the 'ChatGPT page'
+	Then I should be ask to login before accessing the page.
 
-#@notLoggedIn
-#Scenario: A visitor cannot see a button for the AI Chat bot page in the nav bar
-#	Given I am a visitor
-#	And I am on the home page
-#	Then I should not see a button for the Chat bot page
+@notLoggedIn
+Scenario: A visitor cannot see a button for the AI Chat bot page in the nav bar
+	Given I am a visitor
+	And I am on the home page
+	Then I should not see a button for the Chat bot page
 
 @loggedIn
 Scenario: A logged in user can access the Chat bot page
@@ -35,13 +35,13 @@ Scenario: A logged in user can access the Chat bot page
 	When I click on the chatbot button
 	Then I should be redirected to the chatbot page
 
-#@loggedIn
-#Scenario: A logged in user can submit a prompt on the Chat bot page
-#	Given I am a logged in user
-#	And I am on the chatbot page
-#	When I enter a prompt
-#	And I submit my prompt
-#	Then I should see a response to my prompt
+@loggedIn
+Scenario: A logged in user can submit a prompt on the Chat bot page
+	Given I am a logged in user
+	And I am on the chatbot page
+	When I enter a prompt
+	And I submit my prompt
+	Then I should see a response to my prompt
 
 @loggedIn
 Scenario: A logged in user can enter an inapprorate prompt

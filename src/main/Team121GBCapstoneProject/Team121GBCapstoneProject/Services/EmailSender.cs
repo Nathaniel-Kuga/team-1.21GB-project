@@ -30,7 +30,7 @@ public class EmailSender : IEmailSender
 
     public async Task Execute(string apiKey, string subject, string message, string toEmail)
     {
-        var newmessage = "<h1 style=\"text-align: inherit; font-family: inherit\"><span style=\"font-family: &quot;arial black&quot;, helvetica, sans-serif; font-size: 40px; color: #d89816\">Welcome to the Gaming Platform!</span></h1>"
+        var newmessage = "<h1 style=\"text-align: inherit; font-family: inherit\"><span style=\"font-family: &quot;arial black&quot;, helvetica, sans-serif; font-size: 40px; color: #d89816\">Welcome to the Ultimate Gaming Hub!</span></h1>"
                + "<div style=\"font-family: inherit; text-align: inherit\"><span style=\"font-family: &quot;times new roman&quot;, times, serif; font-size: 18px\">Thank you for creating a account.</span></div>"
                + message;
         //subject = "Welcome to Gaming Platform!: Please Confirm your email";

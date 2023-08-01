@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,8 +52,14 @@ namespace Team121GB_BDD_Test.PageObjects
 
         public void UploadPhoto()
         {
-            profilePictureButton.SendKeys("C:\\Users\\Cyber\\source\\repos\\Team-1.21GB-Project\\src\\main\\Team121GBCapstoneProject\\Team121GBCapstoneProject\\wwwroot\\images\\logo15Percent.png");
-
+            // * get image path at run time relative to the project folder
+            string fileName = "logo15Percent.png";
+            string folderName = "Shared";
+            string executablePath = System.Reflection.Assembly.GetEntryAssembly().Location;
+            string projectPath = Directory.GetParent(executablePath).Parent.Parent.FullName;
+            projectPath = Directory.GetParent(projectPath).FullName;
+            string filePath = Path.Combine(projectPath, folderName, fileName);
+            profilePictureButton.SendKeys(filePath);
         }
     }
 }

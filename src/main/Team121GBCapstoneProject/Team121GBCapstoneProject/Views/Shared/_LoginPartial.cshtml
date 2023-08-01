@@ -6,26 +6,107 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <li><a id="chatBotButton" class="nav-link scrollto" asp-asp-controller="Home" asp-action="ChatGpt">AI powered Chat</a></li>
 
-    @*Moshe: I wanted to incorporate this search bar somehow because I spent like 3 hours on it*@
-    @* <li class="nav-link">
-<form id="searchForm" action="/Search/Results/">
-<div class="input-group rounded">
-<input class="form-control rounded" type="text" name="query" id="searchInput" placeholder="Search..."
-aria-label="Search" aria-describedby="search-addon" />
-<button type="submit" id="searchButton" class="input-group-text border-0">
-<i class="bi bi-search"></i>
-</button>
-</div>
-</form>
-</li>*@
+    <li class="nav-link">
+        <div style="display: inline-block">
+        <form id="searchForm" action="/Search/Results/">
+            <div class="input-group rounded">
+                <input class="form-control rounded" type="text" name="query" id="searchInput" placeholder="Search..."
+                       aria-label="Search" aria-describedby="search-addon"/>
+                <button type="submit" id="searchButton" class="input-group-text border-0">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+        </div>
+        
+        <div style="display: inline-block">
+            <button type="button" id="advancedSearchButton" class="btn btn-secondary" title="Advanced Search" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Filters">
+                <i class="bi bi-filter"></i>
+            </button>
+        </div>
+    </li>
 
-    <li class="nav-item navbar order-last order-lg-0">
+    <section class="body-content">
+    <div hidden >
+        <div data-name="popover-content">
+            <div class="input-group">
+                <div class="row g-sm-1">
+                        <div class="col-md-4">
+                            <select class="form-select" id="platformSelectList">
+                                <option value="">Platform</option>
+                                <option value="PC (Microsoft Windows)">Windows</option>
+                                <option value="Linux">Linux</option>
+                                <option value="Xbox Series X|S">Xbox Series X|S</option>
+                                <option value="PlayStation 5">PlayStation 5</option>
+                                <option value="Xbox One">Xbox One</option>
+                                <option value="Playstation 4">Playstation 4</option>
+                                <option value="Nintendo Switch">Nintendo Switch</option>
+                                <option value="Mac">Mac</option>
+                                <option value="Playstation 3">Playstation 3</option>
+                                <option value="Xbox 360">Xbox 360</option>
+                                <option value="SNES">SNES</option>
+                                <option value="Nintendo 3DS">Nintendo 3DS</option>
+                                <option value="Game boy">Game boy</option>
+                                <option value="Nintendo 64">Nintendo 64</option>
+                                <option value="Nintendo GameCube">Nintendo GameCube</option>
+                                <option value="Wii">Wii</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <select class="form-select" id="genreSelectList">
+                                <option value="">Genre</option>
+                                <option value="Point and Click">Point and Click</option>
+                                <option value="Fighting">Fighting</option>
+                                <option value="Shooter">Shooter</option>
+                                <option value="Music">Music</option>
+                                <option value="Platform">Platform</option>
+                                <option value="Puzzle">Puzzle</option>
+                                <option value="Racing">Racing</option>
+                                <option value="Real Time Strategy (RTS)">Real Time Strategy (RTS)</option>
+                                <option value="Role-Playing (RPG)">Role-Playing (RPG)</option>
+                                <option value="Simulator">Simulator</option>
+                                <option value="Sport">Sport</option>
+                                <option value="Strategy">Strategy</option>
+                                <option value="Turn-Based Strategy">Turn-Based Strategy</option>
+                                <option value="Tactical">Tactical</option>
+                                <option value="Quiz/Trivia">Quiz/Trivia</option>
+                                <option value="Hack and slash/Beat 'em up">Hack and slash/Beat 'em up</option>
+                                <option value="Pinball">Pinball</option>
+                                <option value="Adventure">Adventure</option>
+                                <option value="Arcade">Arcade</option>
+                                <option value="Visual Novel">Visual Novel</option>
+                                <option value="Indie">Indie</option>
+                                <option value="Card & Board Game">Card & Board Game</option>
+                                <option value="MOBA">MOBA</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <select class="form-select" id="esrbRatingSelectList">
+                                <option value="0">ESRB Rating</option>
+                                <option value="6">RP</option>
+                                <option value="7">EC</option>
+                                <option value="8">E</option>
+                                <option value="9">E10</option>
+                                <option value="10">T</option>
+                                <option value="11">M</option>
+                                <option value="12">AO</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </section>
+
+@*
+      <li class="nav-item navbar order-last order-lg-0">
         <form id="searchForm" action="/Search/Results/" style="display: inline-flex">
             <input class="input-group rounded" type="text" name="query" id="searchInput" placeholder="Search...">
             <select id="platformSelectList">
-                <option value="" disabled selected hidden>Platform</option>
+                <option value="">Platform</option>
                 <option value="PC (Microsoft Windows)">Windows</option>
                 <option value="Linux">Linux</option>
                 <option value="Xbox Series X|S">Xbox Series X|S</option>
@@ -41,10 +122,10 @@ aria-label="Search" aria-describedby="search-addon" />
                 <option value="Game boy">Game boy</option>
                 <option value="Nintendo 64">Nintendo 64</option>
                 <option value="Nintendo GameCube">Nintendo GameCube</option>
-                <option value="Nintendo Wii">Nintendo Wii</option>
+                <option value="Wii">Wii</option>
             </select>
             <select id="genreSelectList">
-                <option value="" disabled selected hidden>Genre</option>
+                <option value="">Genre</option>
                 <option value="Point and Click">Point and Click</option>
                 <option value="Fighting">Fighting</option>
                 <option value="Shooter">Shooter</option>
@@ -70,7 +151,7 @@ aria-label="Search" aria-describedby="search-addon" />
                 <option value="MOBA">MOBA</option>
             </select>
             <select id="esrbRatingSelectList">
-                <option value="" disabled selected hidden>ESRB Rating</option>
+                <option value="0">ESRB Rating</option>
                 <option value="6">RP</option>
                 <option value="7">EC</option>
                 <option value="8">E</option>
@@ -83,55 +164,42 @@ aria-label="Search" aria-describedby="search-addon" />
                 <i class="bi bi-search"></i>
             </button>
         </form>
-    </li>
+    </li>*@
 
-    @*Moshe: Wanting to remove this since it takes up to much space*@
-    <li class="nav-item navbar order-last order-lg-0">
-        <a class="nav-link scrollto" id="HelloLink" asp-area="Identity" asp-page="/Account/Manage/Index"
-            title="Manage">Hello @UserManager.GetUserAsync(User).Result?.FirstName!</a>
-    </li>
 
     <li class="nav-link dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             @if (UserManager.GetUserAsync(User).Result?.ProfilePicture is null)
             {
-                <img id="profilePicInNavbar" src="https://img.icons8.com/ios/50/null/user--v1.png" width="25" height="25"
+                <img id="profilePicInNavbar" src="https://github.com/moshemartinez/team-1.21GB-project/assets/63754407/5ece7f0e-0a6d-46bf-b3fc-d052c29b9d32" width="35" height="35"
                     class="rounded-circle">
             }
             else
             {
                 <img id="profilePicInNavbar"
                     src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))"
-                    width="25" height="25" class="rounded-circle">
+                    width="35" height="35" class="rounded-circle">
             }
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
             <li>
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"
-                    style="color: black">Account Preferences</a>
+                   style="color: black">Account Preferences</a>
             </li>
             <li>
-                <hr class="dropdown-divider" />
+                <hr class="dropdown-divider"/>
             </li>
-            <li>
-                <a id="gamesListButton" class="dropdown-item" asp-controller="GamesLists" asp-action="Index"
-                    style="color: black">Game Lists</a>
-            </li>
-            <li>
-                <hr class="dropdown-divider" />
-            </li>
-            <li>
-                <a id="speedSearchButton" class="dropdown-item" asp-controller="SpeedSearch" asp-action="Index" style="color: black">Speed Search</a>
-            </li>
-              <li><hr class="dropdown-divider" /></li>
-            <li>
-                <a id="steamGamesButton" class="dropdown-item" asp-controller="SteamGames" asp-action="Index" style="color: black">Steam Games</a>
-                <hr class="dropdown-divider" />
-            </li>
-            <li><hr class="dropdown-divider" /></li>
             <li>
                 <a id="findFriendsButton" class="dropdown-item" asp-controller="Home" asp-action="FindFriends" style="color: black">Find Friends</a>
+            </li>
+            <li>
+                <hr class="dropdown-divider" />
+            </li>
+            <li>
+                <a id="steamGamesButton" class="dropdown-item" asp-controller="SteamGames" asp-action="SteamGamesBlank" style="color: black">Steam Games</a>
+            </li>
+            <li>
                 <hr class="dropdown-divider" />
             </li>
             <li>

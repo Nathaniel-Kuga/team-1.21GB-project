@@ -223,7 +223,7 @@ CREATE TABLE [AspNetUsers] (
     [Id] nvarchar(450) NOT NULL,
     [FirstName] nvarchar(max) NOT NULL,
     [LastName] nvarchar(max) NOT NULL,
-    [ProfilePicture] varbinary(max) NOT NULL,
+    [ProfilePicture] varbinary(max) NULL,
     [UserName] nvarchar(256) NULL,
     [NormalizedUserName] nvarchar(256) NULL,
     [Email] nvarchar(256) NULL,

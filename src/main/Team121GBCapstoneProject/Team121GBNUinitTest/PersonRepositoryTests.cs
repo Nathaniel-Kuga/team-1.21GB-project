@@ -20,7 +20,7 @@ public class PersonRepositoryTests
 {
     // ! I misunderstood where this path leads to. I thought it was supposed to go to the main project Data folder, 
     // ! but it turns out that the path is for seed file you put into the Data folder inside this project.
-    private static readonly string _seedFile = @"..\..\..\Data\seed.sql"; // relative path from where the executable is: bin/Debug/net7.0
+    private static readonly string _seedFile = System.IO.Path.Combine("..", "..", "..", "Data", "seed.sql");/*@"..\..\..\Data\seed.sql";*/ // relative path from where the executable is: bin/Debug/net7.0
     // Create this helper like this, for whatever context you desire
     private InMemoryDbHelper<GPDbContext> _dbHelper = new InMemoryDbHelper<GPDbContext>(_seedFile, DbPersistence.OneDbPerTest);
 

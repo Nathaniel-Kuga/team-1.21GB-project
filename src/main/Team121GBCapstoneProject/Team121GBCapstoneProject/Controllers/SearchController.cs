@@ -1,9 +1,5 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Team121GBCapstoneProject.DAL.Concrete;
-using Team121GBCapstoneProject.DAL.Abstract;
-using Team121GBCapstoneProject.Models;
 
 namespace Team121GBCapstoneProject.Controllers;
 
@@ -21,6 +17,8 @@ public class SearchController : Controller
     {
         return View("SearchResults");
     }
-
+    
+    [Authorize]
+    public IActionResult ChatGpt () => View("../Home/ChatGpt");
 }
 

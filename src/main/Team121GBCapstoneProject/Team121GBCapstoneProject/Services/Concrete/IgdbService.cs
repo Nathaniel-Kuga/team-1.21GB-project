@@ -1,11 +1,8 @@
-using Newtonsoft.Json;
-using System.Net;
-using Microsoft.Net.Http.Headers;
+using Microsoft.EntityFrameworkCore;
 using Team121GBCapstoneProject.Models;
 using Team121GBCapstoneProject.Services.Abstract;
 using System.Net.Http.Headers;
 using Team121GBCapstoneProject.Models.DTO;
-using Microsoft.DotNet.MSIdentity.Shared;
 using Team121GBCapstoneProject.DAL.Abstract;
 using System.Diagnostics;
 
@@ -99,6 +96,16 @@ public class IgdbService : IIgdbService
         {
             try
             {
+                var checker = gamesJsonDTO.ToList();
+                foreach (var game in checker)
+                {
+                    if (game.first_release_date == null || game.age_ratings == null || game.genres == null)
+                    {
+                        checker.Remove(game);
+                    }
+                }
+                gamesJsonDTO = checker;
+
                 return gamesJsonDTO.Select(g => new IgdbGame(g.id,
                                                           g.name,
                                                           g.cover?.url?.ToString(),
@@ -135,7 +142,6 @@ public class IgdbService : IIgdbService
                         }
 
                         int? yearPublished = GameJsonDTO.ConvertFirstReleaseDateFromUnixTimestampToYear(game.YearPublished);
-                        // Look into sending null or 0 instead of 1
                         IgdbGame gameToAdd = new IgdbGame(game.IgdbgameId,
                                                           game.Title,
                                                           game.CoverPicture.ToString(),
@@ -144,7 +150,6 @@ public class IgdbService : IIgdbService
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId,
-                                                        //   game.IgdbgameId,
                                                           game.GameGenres
                                                               .Select(g => g.Genre.Name)
                                                               .ToList(),
@@ -175,7 +180,6 @@ public class IgdbService : IIgdbService
                                                           game.YearPublished,
                                                           (double)game.AverageRating,
                                                           game.EsrbratingId,
-                                                        //   game.IgdbgameId,
                                                           genres,
                                                           platforms);
                         gamesToReturn.Add(gameToAdd);
@@ -206,13 +210,14 @@ public class IgdbService : IIgdbService
                 {
                     break;
                 }
-                if (CheckForGame(GamesFromOurDB, game.GameTitle) == true)
+                // * check that a game doesn't already exist in db
+                if (CheckForGame(GamesFromOurDB, game.GameTitle, game.Id) == true)
                 {
                     continue;
                 }
 
                 Game gameToAdd = new Game();
-                gameToAdd.Title = game.GameTitle.ToString();
+                gameToAdd.Title = game.GameTitle;
 
                 if (game.GameCoverArt == null)
                 {
@@ -220,14 +225,13 @@ public class IgdbService : IIgdbService
                 }
                 else
                 {
-                    gameToAdd.CoverPicture = game.GameCoverArt.ToString();
+                    gameToAdd.CoverPicture = game.GameCoverArt;
                 }
 
-                gameToAdd.Igdburl = game.GameWebsite.ToString();
-                gameToAdd.Description = game.GameDescription.ToString();
+                gameToAdd.Igdburl = game.GameWebsite;
+                gameToAdd.Description = game.GameDescription;
                 gameToAdd.YearPublished = game.FirstReleaseDate;
                 gameToAdd.AverageRating = ConvertRating(game.AverageRating.Value);
-                //gameToAdd.AverageRating = game.AverageRating;
                 gameToAdd.IgdbgameId = (int)game.Id;
 
                 // * This is here to make sure that esrbrating will always be null or an int.
@@ -252,12 +256,13 @@ public class IgdbService : IIgdbService
                     Game addedGame = _genericGameRepo.AddOrUpdate(gameToAdd);
                     AddGameGenreForNewGames(game, addedGame);
                     AddGamePlatformForNewGames(game, addedGame);
+                    gamesToReturn.Add(game);
+
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e);
                 }
-                gamesToReturn.Add(game);
             }
             catch (Exception e)
             {
@@ -294,10 +299,13 @@ public class IgdbService : IIgdbService
                      platform,
                      genre,
                      esrbRating);
-        gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
-                                                platform,
-                                                genre,
-                                                esrbRating);
+    /*    if (esrbRating != -100)
+        {*/
+            gamesToReturn = ApplyFiltersForNewGames(gamesToReturn,
+                                                    platform,
+                                                    genre,
+                                                    esrbRating);
+        //}
         return gamesToReturn.OrderByDescending(x => x.FirstReleaseDate);
     }
 
@@ -322,17 +330,8 @@ public class IgdbService : IIgdbService
                                                   esrbRating);*/
         return gamesFromSearch.OrderByDescending(x => x.FirstReleaseDate);
     }
-    public bool CheckForGame(List<Game> gamesToCheck, string title)
-    {
-        foreach (var game in gamesToCheck)
-        {
-            if (game.Title == title)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+    public bool CheckForGame(List<Game> gamesToCheck, string title, int? igdbId) => _genericGameRepo.GetAll().Any(game => game.Title == title || game.IgdbgameId == igdbId);
+    
     public void AddGameGenreForNewGames(IgdbGame gameFromApi, Game addedGame)
     {
         List<Genre> allGenres = _genreRepository.GetAll().ToList();
@@ -415,5 +414,38 @@ public class IgdbService : IIgdbService
         double final = ones + numberToAddFinal;
 
         return final;
+    }
+
+    public async Task<IEnumerable<IgdbGame>> SearchWithFiltersOnly(string platform = "",
+                                                            string genre = "",
+                                                            int esrbRating = 0)
+    {
+        IQueryable<Game> games =  _genericGameRepo.GetAll();
+        var filteredGames = games.Where(g =>
+                                        (string.IsNullOrEmpty(genre) || (g.GameGenres != null && g.GameGenres.Any(x => x.Genre != null && x.Genre.Name == genre))) &&
+                                        (string.IsNullOrEmpty(platform) || (g.GamePlatforms != null && g.GamePlatforms.Any(x => x.Platform != null && x.Platform.Name == platform))) &&
+                                        (esrbRating == 0 || (g.Esrbrating != null && g.Esrbrating.IgdbratingValue == esrbRating)))
+                                 .ToList();
+        if (games.Count() == 0)
+        {
+            return Enumerable.Empty<IgdbGame>();
+        }
+        else
+        {
+            Random random = new Random();
+            filteredGames = filteredGames.OrderBy(x => random.Next())
+                         .ToList();
+            int count = filteredGames.Count();
+            if (count > 10)
+            {
+                count = 10;
+            }
+            IEnumerable<IgdbGame> gamesToReturn = filteredGames.Take(count)
+                                                                .Select(g => new IgdbGame(g.IgdbgameId, g.Title, g.CoverPicture.ToString(),
+                                                                                            g.Igdburl, g.Description, g.YearPublished, (double)g.AverageRating,
+                                                                                            g.EsrbratingId, g.GameGenres.Select(genre => genre.Genre.Name).ToList(),
+                                                                                            g.GamePlatforms.Select(platform => platform.Platform.Name).ToList()));
+            return gamesToReturn.OrderByDescending(x => x.FirstReleaseDate);
+        }
     }
 }

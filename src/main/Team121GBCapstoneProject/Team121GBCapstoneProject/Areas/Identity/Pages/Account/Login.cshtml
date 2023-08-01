@@ -7,7 +7,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <h1>@ViewData["Title"]</h1>
             <section class="border p-3">
                 <form id="account" method="post">
@@ -25,7 +25,7 @@
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <div class="checkbox mb-3">
-                        <label asp-for="Input.RememberMe" class="form-label">
+                        <label asp-for="Input.RememberMe" class="form-label yellowText">
                             <input class="form-check-input" id="Input_RememberMe" asp-for="Input.RememberMe" />
                             @Html.DisplayNameFor(m => m.Input.RememberMe)
                         </label>
@@ -46,6 +46,37 @@
                         </p>
                     </div>
                 </form>
+                <div class="col-md-6 col-md-offset-2">
+                        <h3 class="toWhite">Or</h3>
+                        <hr />
+                        @{
+                            if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                            {
+                                <div>
+                                    <p>
+                                        There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                                            about setting up this ASP.NET application to support logging in via external services</a>.
+                                    </p>
+                                </div>
+                            }
+                            else
+                            {
+                                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                    <div>
+                                        <p>
+                                            @foreach (var provider in Model.ExternalLogins!)
+                                            {
+                                                if (provider.Name != "Google") continue;
+                                                <button type="submit" class="btn" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                    <img src="~/images/create-apple-google-signin-buttons-quick-dirty-way-google.png" style="height: 50px; width: 200px"/>
+                                                </button>
+                                            }
+                                        </p>
+                                    </div>
+                                </form>
+                            }
+                        }
+                </div>
             </section>
         </div>
     </div>
